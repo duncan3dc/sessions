@@ -5,7 +5,7 @@ namespace duncan3dc\Sessions;
 /**
  * A non-blocking session manager.
  */
-class SessionInstance
+class SessionInstance implements SessionInterface
 {
     /**
      * @var bool $init Whether the session has been started or not.
