@@ -10,6 +10,16 @@ interface SessionInterface
 
 
     /**
+     * Create a new namespaced section of this session to avoid clashes.
+     *
+     * @param string $name The namespace of the session
+     *
+     * @return SessionNamespace
+     */
+    public function createNamespace($name);
+
+
+    /**
      * Get a value from the session data cache.
      *
      * @param string $key The name of the name to retrieve
