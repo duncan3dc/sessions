@@ -20,6 +20,14 @@ interface SessionInterface
 
 
     /**
+     * Get all the current session data.
+     *
+     * @return array
+     */
+    public function getAll();
+
+
+    /**
      * Set a value within session data.
      *
      * @param string|array $data Either the name of the session key to update, or an array of keys to update

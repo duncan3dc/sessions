@@ -75,4 +75,26 @@ trait SessionTrait
 
         return $this->set($keyValues);
     }
+
+
+    /**
+     * Clear all previously set values.
+     *
+     * @return static
+     */
+    public function clear()
+    {
+        # Get all the current session data
+        $values = $this->getAll();
+
+        # Replace all the values with nulls
+        $values = array_map(function($value) {
+            return null;
+        }, $values);
+
+        # Store all the null values (effectively unsetting the keys)
+        $this->set($values);
+
+        return $this;
+    }
 }

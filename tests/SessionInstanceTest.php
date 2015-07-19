@@ -26,6 +26,22 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetAll()
+    {
+        $this->session->set("one", 1);
+        $this->session->set([
+            "two"   =>  2,
+            "three" =>  3,
+        ]);
+
+        $this->assertSame([
+            "one"   =>  1,
+            "two"   =>  2,
+            "three" =>  3,
+        ], $this->session->getAll());
+    }
+
+
     public function testInt()
     {
         $result = $this->session->set("one", 1);

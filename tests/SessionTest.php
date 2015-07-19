@@ -75,6 +75,14 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetAll()
+    {
+        $this->session->shouldReceive("getAll")->once()->with()->andReturn([]);
+        $result = Session::getAll();
+        $this->assertSame([], $result);
+    }
+
+
     public function testUnset()
     {
         $this->session->shouldReceive("delete")->once()->with("one");

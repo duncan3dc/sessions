@@ -86,6 +86,19 @@ class SessionInstance implements SessionInterface
 
 
     /**
+     * Get all the current session data.
+     *
+     * @return array
+     */
+    public function getAll()
+    {
+        $this->init();
+
+        return $this->data;
+    }
+
+
+    /**
      * Set a value within session data.
      *
      * @param string|array $data Either the name of the session key to update, or an array of keys to update
@@ -135,19 +148,6 @@ class SessionInstance implements SessionInterface
         $this->data = $_SESSION;
 
         session_write_close();
-
-        return $this;
-    }
-
-
-    /**
-     * Clear all previously set values.
-     *
-     * @return static
-     */
-    public function clear()
-    {
-        $this->delete(...array_keys($this->data));
 
         return $this;
     }
