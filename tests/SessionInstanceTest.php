@@ -183,4 +183,36 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->session->get("two"));
         $this->assertNull($this->session->get("three"));
     }
+
+
+    public function testCreateNamespace()
+    {
+        $extra = $this->session->createNamespace("extra");
+
+        $result = $extra->set("one", 1);
+
+        $this->assertSame($extra, $result);
+        $this->assertNull($this->session->get("one"));
+        $this->assertSame(1, $extra->get("one"));
+    }
+    public function testCreateNamespaceClash()
+    {
+        $one = $this->session->createNamespace("one");
+        $two = $one->createNamespace("two");
+
+        $one->set("two", 2);
+
+        $result = $two->set("three", 3);
+
+        # Ensure we can chain and our sub-namespace stored a value
+        $this->assertSame($two, $result);
+        $this->assertSame(3, $two->get("three"));
+
+        # Ensure none of our namespaced keys poluted the global space
+        $this->assertNull($this->session->get("one"));
+        $this->assertNull($this->session->get("two"));
+
+        # Ensure our first namespace was able to store a value with the same key as the sub-namespace
+        $this->assertSame(2, $one->get("two"));
+    }
 }

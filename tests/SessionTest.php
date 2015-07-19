@@ -133,4 +133,12 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $result = Session::getSet("field", "default", true);
         $this->assertSame("3", $result);
     }
+
+
+    public function testCreateNamespace()
+    {
+        $this->session->shouldReceive("createNamespace")->once()->with("extra")->andReturn("ok");
+        $result = Session::createNamespace("extra");
+        $this->assertSame("ok", $result);
+    }
 }
