@@ -97,4 +97,52 @@ trait SessionTrait
 
         return $this;
     }
+
+
+    /**
+     * Converts the passed session key into a flashed key.
+     *
+     * @param string $key The key to convert
+     *
+     * @return string
+     */
+    protected function flashKey($key)
+    {
+        return "_fs_{$key}";
+    }
+
+
+    /**
+     * Retrieve a one-time value from the session data.
+     *
+     * @param string $key The name of the flash value to retrieve
+     *
+     * @return mixed
+     */
+    public function getFlash($key)
+    {
+        $key = $this->flashKey($key);
+
+        $value = $this->get($key);
+
+        $this->delete($key);
+
+        return $value;
+    }
+
+
+    /**
+     * Set a one-time value within session data.
+     *
+     * @param string $key The name of the flash value to update
+     * @param mixed $value The value to store against the key
+     *
+     * @return static
+     */
+    public function setFlash($key, $value)
+    {
+        $key = $this->flashKey($key);
+
+        return $this->set($key, $value);
+    }
 }

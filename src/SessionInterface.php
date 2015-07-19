@@ -82,4 +82,25 @@ interface SessionInterface
      * @return static
      */
     public function clear();
+
+
+    /**
+     * Retrieve a one-time value from the session data.
+     *
+     * @param string $key The name of the flash value to retrieve
+     *
+     * @return mixed
+     */
+    public function getFlash($key);
+
+
+    /**
+     * Set a one-time value within session data.
+     *
+     * @param string $key The name of the flash value to update
+     * @param mixed $value The value to store against the key
+     *
+     * @return static
+     */
+    public function setFlash($key, $value);
 }

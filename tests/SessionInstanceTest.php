@@ -215,4 +215,20 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
         # Ensure our first namespace was able to store a value with the same key as the sub-namespace
         $this->assertSame(2, $one->get("two"));
     }
+
+
+    public function testFlash()
+    {
+        $this->session->setFlash("field", "boom!");
+        $this->assertSame("boom!", $this->session->getFlash("field"));
+        $this->assertSame(null, $this->session->getFlash("field"));
+    }
+    public function testFlashClash()
+    {
+        $this->session->setFlash("field", "boom!");
+        $this->session->set("field", "value");
+
+        $this->assertSame("boom!", $this->session->getFlash("field"));
+        $this->assertSame("value", $this->session->get("field"));
+    }
 }

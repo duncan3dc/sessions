@@ -141,4 +141,20 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $result = Session::createNamespace("extra");
         $this->assertSame("ok", $result);
     }
+
+
+    public function testSetFlash()
+    {
+        $this->session->shouldReceive("setFlash")->once()->with("field", "boom!");
+        $result = Session::setFlash("field", "boom!");
+        $this->assertNull($result);
+    }
+
+
+    public function testGetFlash()
+    {
+        $this->session->shouldReceive("getFlash")->once()->with("field")->andReturn("boom!");
+        $result = Session::getFlash("field");
+        $this->assertSame("boom!", $result);
+    }
 }

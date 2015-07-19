@@ -149,6 +149,33 @@ class Session
 
 
     /**
+     * Retrieve a one-time value from the session data.
+     *
+     * @param string $key The name of the flash value to retrieve
+     *
+     * @return mixed
+     */
+    public static function getFlash($key)
+    {
+        return static::getInstance()->getFlash($key);
+    }
+
+
+    /**
+     * Set a one-time value within session data.
+     *
+     * @param string $key The name of the flash value to update
+     * @param mixed $value The value to store against the key
+     *
+     * @return void
+     */
+    public static function setFlash($key, $value)
+    {
+        static::getInstance()->setFlash($key, $value);
+    }
+
+
+    /**
      * Tear down the session and wipe all it's data.
      *
      * @return void

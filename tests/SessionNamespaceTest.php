@@ -114,4 +114,22 @@ class SessionNamespaceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($extra, $result);
     }
+
+
+    public function testSetFlash()
+    {
+        $this->session->shouldReceive("set")->once()->with("_ns_test__fs_field", "boom!");
+        $result = $this->namespace->setFlash("field", "boom!");
+        $this->assertSame($this->namespace, $result);
+    }
+
+
+    public function testGetFlash()
+    {
+        $this->session->shouldReceive("get")->once()->with("_ns_test__fs_field")->andReturn("boom!");
+        $this->session->shouldReceive("set")->once()->with(["_ns_test__fs_field" => null], null);
+
+        $result = $this->namespace->getFlash("field");
+        $this->assertSame("boom!", $result);
+    }
 }
