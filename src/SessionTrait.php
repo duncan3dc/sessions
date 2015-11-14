@@ -88,7 +88,7 @@ trait SessionTrait
         $values = $this->getAll();
 
         # Replace all the values with nulls
-        $values = array_map(function($value) {
+        $values = array_map(function ($value) {
             return null;
         }, $values);
 
