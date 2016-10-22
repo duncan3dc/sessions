@@ -15,7 +15,7 @@ install:
   - composer update $COMPOSER_OPTS
 
 script:
-  - ./vendor/bin/phpunit
+  - ./vendor/bin/phpunit --stderr
   - ./tests/lint.sh
 
 git:

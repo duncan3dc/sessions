@@ -11,11 +11,6 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->session = new SessionInstance("test");
-
-        $reflection = new \ReflectionClass($this->session);
-        $init = $reflection->getProperty("init");
-        $init->setAccessible(true);
-        $init->setValue($this->session, true);
     }
 
 
