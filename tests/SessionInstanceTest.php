@@ -83,53 +83,53 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSet1()
     {
-        $_POST["field"] = "post";
-        $_GET["field"] = "get";
-        $this->session->set("field", "existing");
+        $_POST["field1"] = "post";
+        $_GET["field1"] = "get";
+        $this->session->set("field1", "existing");
 
-        $this->assertSame("post", $this->session->getSet("field"));
+        $this->assertSame("post", $this->session->getSet("field1"));
     }
     public function testGetSet2()
     {
-        $_POST["field"] = "post";
-        $_GET["field"] = "get";
-        $this->session->set("field", "existing");
+        $_POST["field2"] = "post";
+        $_GET["field2"] = "get";
+        $this->session->set("field2", "existing");
 
-        $this->assertSame("post", $this->session->getSet("field", "default", true));
+        $this->assertSame("post", $this->session->getSet("field2", "default", true));
     }
     public function testGetSet3()
     {
-        $_GET["field"] = "get";
-        $this->session->set("field", "existing");
+        $_GET["field3"] = "get";
+        $this->session->set("fiel3", "existing");
 
-        $this->assertSame("get", $this->session->getSet("field"));
+        $this->assertSame("get", $this->session->getSet("field3"));
     }
     public function testGetSet4()
     {
-        $_GET["field"] = "get";
-        $this->session->set("field", "existing");
+        $_GET["field4"] = "get";
+        $this->session->set("field4", "existing");
 
-        $this->assertSame("get", $this->session->getSet("field", "default", true));
+        $this->assertSame("get", $this->session->getSet("field4", "default", true));
     }
     public function testGetSet5()
     {
-        $this->session->set("field", "existing");
+        $this->session->set("field5", "existing");
 
-        $this->assertSame("existing", $this->session->getSet("field"));
+        $this->assertSame("existing", $this->session->getSet("field5"));
     }
     public function testGetSet6()
     {
-        $this->session->set("field", "existing");
+        $this->session->set("field6", "existing");
 
-        $this->assertSame("existing", $this->session->getSet("field", "default", true));
+        $this->assertSame("existing", $this->session->getSet("field6", "default", true));
     }
     public function testGetSet7()
     {
-        $this->assertSame(null, $this->session->getSet("field"));
+        $this->assertSame(null, $this->session->getSet("field7"));
     }
     public function testGetSet8()
     {
-        $this->assertSame("default", $this->session->getSet("field", "default", true));
+        $this->assertSame("default", $this->session->getSet("field8", "default", true));
     }
 
 
