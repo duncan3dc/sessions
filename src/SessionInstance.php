@@ -58,6 +58,12 @@ class SessionInstance implements SessionInterface
 
         session_start();
 
+        $cookieParams = session_get_cookie_params();
+        if ($cookieParams['lifetime'] > 0) {
+            setcookie($this->name, session_id(), time() + $cookieParams['lifetime'], $cookieParams['path'],
+                $cookieParams['domain'], $cookieParams['secure'], $cookieParams['httponly']);
+        }
+
         # Grab the sessions data to respond to get()
         $this->data = $_SESSION;
 
@@ -177,7 +183,11 @@ class SessionInstance implements SessionInterface
 
         unset($_SESSION);
 
-        setcookie($this->name, "", time() - 86400, "/");
+        $cookieParams = session_get_cookie_params();
+
+        // 1? yes - long long time ago no calculation required
+        setcookie($this->name, "", 1, $cookieParams['path'],
+            $cookieParams['domain'], $cookieParams['secure'], $cookieParams['httponly']);
 
         session_destroy();
 
