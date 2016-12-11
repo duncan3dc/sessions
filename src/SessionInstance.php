@@ -179,13 +179,12 @@ class SessionInstance implements SessionInterface
      */
     public function destroy()
     {
-        @session_start();
+        $this->init();
 
         unset($_SESSION);
 
         $cookieParams = session_get_cookie_params();
 
-        // 1? yes - long long time ago no calculation required
         setcookie($this->name, "", 1, $cookieParams['path'],
             $cookieParams['domain'], $cookieParams['secure'], $cookieParams['httponly']);
 
