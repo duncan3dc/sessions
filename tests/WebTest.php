@@ -100,7 +100,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
         $response = $this->request("sub/getall.php");
         $cookie = $response->getHeader("Set-Cookie")[0];
         $this->assertRegExp(
-            "/^web=[a-z0-9]+; expires=.* GMT; Max-Age=3600; path=\/sub; domain=localhost; HttpOnly$/",
+            "/^web=[a-z0-9]+; expires=.* GMT; Max-Age=3600; path=\/sub; domain=localhost; [Hh]ttp[Oo]nly$/",
             $cookie
         );
     }
@@ -137,7 +137,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
 
         $cookie = $response->getHeader("Set-Cookie")[0];
         $this->assertRegExp(
-            "/^web=[a-z0-9]+; expires=.* GMT; Max-Age=3600; path=\/sub; domain=localhost; HttpOnly$/",
+            "/^web=[a-z0-9]+; expires=.* GMT; Max-Age=3600; path=\/sub; domain=localhost; [Hh]ttp[Oo]nly$/",
             $cookie
         );
     }
