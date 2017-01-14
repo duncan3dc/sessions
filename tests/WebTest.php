@@ -33,8 +33,17 @@ class WebTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    private function request($path)
+    private function request($path, $name = null)
     {
+        if ($name !== null) {
+            if (strpos($path, "?")) {
+                $path .= "&";
+            } else {
+                $path .= "?";
+            }
+            $path .= "session_name={$name}";
+        }
+
         return $this->client->request("GET", "http://localhost:" . SERVER_PORT . "/{$path}");
     }
 
