@@ -2,6 +2,7 @@
 
 namespace duncan3dc\SessionsTest;
 
+use duncan3dc\ObjectIntruder\Intruder;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
 
@@ -17,10 +18,11 @@ class WebTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped("No internal webserver available on HHVM for web tests");
         }
 
-        $this->cookies = tempnam(sys_get_temp_dir(), "duncan3dc-sessions-");
+        $path = tempnam(sys_get_temp_dir(), "duncan3dc-sessions-");
+        $this->cookies = new FileCookieJar($path);
 
         $this->client = new Client([
-            "cookies"   =>  new FileCookieJar($this->cookies),
+            "cookies" => $this->cookies,
         ]);
     }
 
@@ -29,7 +31,18 @@ class WebTest extends \PHPUnit_Framework_TestCase
     {
         unset($this->client);
 
-        unlink($this->cookies);
+        $cookies = new Intruder($this->cookies);
+        unlink($cookies->filename);
+    }
+
+
+    private function getCookie($name = "web")
+    {
+        foreach ($this->cookies as $cookie) {
+            if ($cookie->getName() === $name) {
+                return $cookie;
+            }
+        }
     }
 
 
@@ -108,8 +121,40 @@ class WebTest extends \PHPUnit_Framework_TestCase
 
     public function testCookies()
     {
-        $response = $this->request("getall.php");
-        $cookie = $response->getHeader("Set-Cookie")[0];
-        $this->assertRegExp("/^web=[a-z0-9]+; path=\/$/", $cookie);
+        $this->request("cookies.php");
+
+        $cookie = $this->getCookie();
+
+        $this->assertEquals("web", $cookie->getName());
+        $this->assertEquals("localhost", $cookie->getDomain());
+        $this->assertEquals("/", $cookie->getPath());
+        $this->assertEquals(0, $cookie->getMaxAge());
+        $this->assertEquals(false, $cookie->getSecure());
+        $this->assertEquals(false, $cookie->getHttpOnly());
+    }
+    public function testCookieLifetime()
+    {
+        $this->request("cookies.php?lifetime=33");
+        $this->assertEquals(33, $this->getCookie()->getMaxAge());
+    }
+    public function testCookiePath()
+    {
+        $this->request("cookies.php?path=/admin");
+        $this->assertEquals("/admin", $this->getCookie()->getPath());
+    }
+    public function testCookieDomain()
+    {
+        $this->request("cookies.php?domain=example.com");
+        $this->assertEquals("example.com", $this->getCookie()->getDomain());
+    }
+    public function testCookieSecure()
+    {
+        $this->request("cookies.php?secure=1");
+        $this->assertEquals(true, $this->getCookie()->getSecure());
+    }
+    public function testCookieHttpOnly()
+    {
+        $this->request("cookies.php?httponly=1");
+        $this->assertEquals(true, $this->getCookie()->getHttpOnly());
     }
 }
