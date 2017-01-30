@@ -18,6 +18,7 @@
     "require-dev": {
         "guzzlehttp/guzzle": "^6.2",
         "mockery/mockery": "^0.9.4",
+        "duncan3dc/object-intruder": "^0.1.0",
         "phpunit/phpunit": "^5.0"
     },
     "autoload": {
