@@ -173,13 +173,16 @@ class SessionInstance implements SessionInterface
      */
     public function destroy()
     {
+        $this->init();
+
+        # Start the session up, but ignore the error about headers already being sent
         @session_start();
 
-        unset($_SESSION);
-
-        setcookie($this->name, "", time() - 86400, "/");
-
+        # Clear the session data from the server
         session_destroy();
+
+        # Clear the cookie so the client knows the session is gone
+        setcookie($this->name, "", time() - 86400, "/");
 
         # Reset the session data
         $this->init = false;

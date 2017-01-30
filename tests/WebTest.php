@@ -73,6 +73,39 @@ class WebTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testDestroy()
+    {
+        $this->request("set.php?key=ok&value=yep");
+        $this->assertRequest("getall.php", [
+            "ok"    =>  "yep",
+        ]);
+
+        $this->request("destroy.php");
+        $this->assertRequest("getall.php", []);
+    }
+
+
+    public function testDestroyCorrectsession()
+    {
+        $this->request("set.php?key=ok&value=web1", "web1");
+        $this->assertRequest("getall.php?session_name=web1", [
+            "ok"    =>  "web1",
+        ]);
+
+        $this->request("set.php?key=ok&value=web2", "web2");
+        $this->assertRequest("getall.php?session_name=web2", [
+            "ok"    =>  "web2",
+        ]);
+
+        # Make sure that destroy only wipes the correct session
+        $this->request("destroy.php", "web1");
+        $this->assertRequest("getall.php?session_name=web1", []);
+        $this->assertRequest("getall.php?session_name=web2", [
+            "ok"    =>  "web2",
+        ]);
+    }
+
+
     public function testCookies()
     {
         $response = $this->request("getall.php");
