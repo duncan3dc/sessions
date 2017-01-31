@@ -71,6 +71,15 @@ class SessionInstance implements SessionInterface
 
         session_start();
 
+        /**
+         * If the cookie has a specific lifetime (not unlimited)
+         * then ensure it is extended on each use of the session.
+         */
+        if ($this->cookie->getLifetime() > 0) {
+            $expires = time() + $this->cookie->getLifetime();
+            setcookie($this->name, session_id(), $expires, $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
+        }
+
         # Grab the sessions data to respond to get()
         $this->data = $_SESSION;
 

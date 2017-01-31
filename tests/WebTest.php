@@ -157,4 +157,25 @@ class WebTest extends \PHPUnit_Framework_TestCase
         $this->request("cookies.php?httponly=1");
         $this->assertEquals(true, $this->getCookie()->getHttpOnly());
     }
+
+
+    public function testRefreshCookie()
+    {
+        $this->request("cookies.php?lifetime=4");
+
+        /**
+         * Ensure that when we use the session again 10 seconds later,
+         * the expiry time on the cookie is extended, and doesn't
+         * still end 15 seconds after the session started.
+         */
+        sleep(2);
+        $time = time();
+        $this->request("cookies.php?lifetime=4");
+
+        $cookie = $this->getCookie();
+
+        # We can't test precisely due to timing issues, but check that it's within one second
+        $this->assertGreaterThan($time + 3, $cookie->getExpires());
+        $this->assertLessThan($time + 5, $cookie->getExpires());
+    }
 }
