@@ -10,6 +10,7 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        session_set_save_handler(new SessionHandler);
         $this->session = new SessionInstance("test");
     }
 
