@@ -181,6 +181,23 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testDestroy()
+    {
+        # HHVM doesn't loike accessing a destroyed session, so don't try it
+        if (isset($_ENV["TRAVIS_PHP_VERSION"]) && $_ENV["TRAVIS_PHP_VERSION"] === "hhvm") {
+            $this->markTestSkipped("No internal webserver available on HHVM for web tests");
+            return;
+        }
+
+        $this->session->set("album", "kezia");
+        $this->assertSame("kezia", $this->session->get("album"));
+
+        $this->session->destroy();
+
+        $this->assertSame(null, $this->session->get("album"));
+    }
+
+
     public function testCreateNamespace()
     {
         $extra = $this->session->createNamespace("extra");
