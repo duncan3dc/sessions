@@ -168,7 +168,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
         $this->request("set.php?key=ok&value=no");
         $this->request("delete.php");
 
-        $this->assertSame(1, $this->cookieJar->count());
+        $this->assertSame(1, $this->cookies->count());
         $this->assertEquals([
             'Name' => 'web',
             'Value' => 'deleted',
@@ -179,7 +179,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
             'Secure' => false,
             'Discard' => false,
             'HttpOnly' => false
-        ], $this->cookieJar->toArray()[0]);
+        ], $this->cookies->toArray()[0]);
     }
 
     public function testCookieWithParams()
@@ -203,7 +203,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
         $this->request("sub/set.php?key=ok&value=no");
         $this->request("sub/delete.php");
 
-        $this->assertSame(1, $this->cookieJar->count());
+        $this->assertSame(1, $this->cookies->count());
         $this->assertEquals([
             'Name' => 'web',
             'Value' => 'deleted',
@@ -214,7 +214,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
             'Secure' => false,
             'Discard' => false,
             'HttpOnly' => true
-        ], $this->cookieJar->toArray()[0]);
+        ], $this->cookies->toArray()[0]);
     }
 
     public function testRefreshCookie()

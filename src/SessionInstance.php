@@ -65,16 +65,20 @@ class SessionInstance implements SessionInterface
 
         session_cache_limiter(false);
 
-        session_set_cookie_params($this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
+        session_set_cookie_params(
+            $this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(),
+            $this->cookie->isSecure(), $this->cookie->isHttpOnly()
+        );
 
         session_name($this->name);
 
         session_start();
 
-        $cookieParams = session_get_cookie_params();
-        if ($cookieParams['lifetime'] > 0) {
-            setcookie($this->name, session_id(), time() + $cookieParams['lifetime'], $cookieParams['path'],
-                $cookieParams['domain'], $cookieParams['secure'], $cookieParams['httponly']);
+        if ($this->cookie->getLifetime() > 0) {
+            setcookie(
+                $this->name, session_id(), time() + $this->cookie->getLifetime(), $this->cookie->getPath(),
+                $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly()
+            );
         }
 
         # Grab the sessions data to respond to get()
@@ -195,9 +199,10 @@ class SessionInstance implements SessionInterface
         $this->init();
 
         # Remove the session cookie
-        $cookieParams = session_get_cookie_params();
-        setcookie($this->name, "", 1, $cookieParams['path'],
-            $cookieParams['domain'], $cookieParams['secure'], $cookieParams['httponly']);
+        setcookie(
+            $this->name, "", 1, $this->cookie->getPath(), $this->cookie->getDomain(),
+            $this->cookie->isSecure(), $this->cookie->isHttpOnly()
+        );
 
         # destroy the session
         session_destroy();
