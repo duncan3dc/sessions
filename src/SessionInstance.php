@@ -200,7 +200,10 @@ class SessionInstance implements SessionInterface
     {
         $this->init();
 
-        # delete session as suggested in php docs
+        # Start the session up, but ignore the error about headers already being sent
+        @session_start();
+
+        # Delete session as suggested in php docs
         $_SESSION = [];
 
         # Remove the session cookie
@@ -211,7 +214,7 @@ class SessionInstance implements SessionInterface
             );
         }
 
-        # destroy the session
+        # Destroy the session to remove all remaining session data (on server)
         session_destroy();
 
         # Reset the session data

@@ -13,6 +13,7 @@ env:
 install:
   - composer self-update
   - composer update $COMPOSER_OPTS
+  - mkdir /tmp/duncan3dc-sessions
 
 script:
   - ./vendor/bin/phpunit --stderr

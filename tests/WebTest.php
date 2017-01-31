@@ -5,13 +5,24 @@ namespace duncan3dc\SessionsTest;
 use duncan3dc\ObjectIntruder\Intruder;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
+use GuzzleHttp\Cookie\SetCookie;
 
 class WebTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var string */
+    /** @var FileCookieJar */
     private $cookies;
     /** @var Client */
     private $client;
+
+    private function getCookie($name)
+    {
+        /** @var SetCookie $cookie */
+        foreach ($this->cookies->getIterator() as $cookie) {
+            if ($cookie->getName() === $name) {
+                return $cookie;
+            }
+        }
+    }
 
     public function setUp()
     {
@@ -106,6 +117,37 @@ class WebTest extends \PHPUnit_Framework_TestCase
         $this->assertRequest("getall.php?session_name=web2", [
             "ok"    =>  "web2",
         ]);
+    }
+
+    public function testDestroyEmptiesSession()
+    {
+        $this->request("set.php?key=ok&value=web1", "web1");
+        $this->assertRequest("getall.php?session_name=web1", [
+            "ok"    =>  "web1",
+        ]);
+
+        # destroy the session but keep the cookie (malfunc client)
+        /** @var SetCookie $cookie */
+        $cookie = clone $this->getCookie("web1");
+        $this->request("destroy.php", "web1");
+        $this->cookies->setCookie($cookie);
+
+        $this->assertRequest("getall.php?session_name=web1", []);
+    }
+
+    public function testDestroyRemovesSession()
+    {
+        // remove all files
+        exec('rm -Rf /tmp/duncan3dc-sessions/*');
+
+        $this->request("set.php?key=ok&value=web1", "web1");
+        $this->assertRequest("getall.php?session_name=web1", [
+            "ok"    =>  "web1",
+        ]);
+
+        $this->request("destroy.php", "web1");
+        exec('find /tmp/duncan3dc-sessions -type f', $files);
+        $this->assertEmpty($files);
     }
 
 
