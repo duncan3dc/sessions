@@ -6,10 +6,12 @@ use duncan3dc\Sessions\SessionInstance;
 
 class SessionInstanceTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var SessionInstance */
     protected $session;
 
     public function setUp()
     {
+        ini_set('session.gc_probability', 0);
         session_set_cookie_params(30);
         $this->session = new SessionInstance("test");
     }
