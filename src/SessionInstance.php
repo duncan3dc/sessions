@@ -65,16 +65,18 @@ class SessionInstance implements SessionInterface
 
         session_cache_limiter(false);
 
-        session_set_cookie_params(
-            $this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(),
-            $this->cookie->isSecure(), $this->cookie->isHttpOnly()
-        );
+        if (ini_get("session.use_cookies")) {
+            session_set_cookie_params(
+                $this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(),
+                $this->cookie->isSecure(), $this->cookie->isHttpOnly()
+            );
+        }
 
         session_name($this->name);
 
         session_start();
 
-        if ($this->cookie->getLifetime() > 0) {
+        if (ini_get("session.use_cookies") && $this->cookie->getLifetime() > 0) {
             setcookie(
                 $this->name, session_id(), time() + $this->cookie->getLifetime(), $this->cookie->getPath(),
                 $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly()
@@ -198,17 +200,21 @@ class SessionInstance implements SessionInterface
     {
         $this->init();
 
+        # delete session as suggested in php docs
+        $_SESSION = [];
+
         # Remove the session cookie
-        setcookie(
-            $this->name, "", 1, $this->cookie->getPath(), $this->cookie->getDomain(),
-            $this->cookie->isSecure(), $this->cookie->isHttpOnly()
-        );
+        if (ini_get("session.use_cookies")) {
+            setcookie(
+                $this->name, "", 1, $this->cookie->getPath(), $this->cookie->getDomain(),
+                $this->cookie->isSecure(), $this->cookie->isHttpOnly()
+            );
+        }
 
         # destroy the session
         session_destroy();
 
         # Reset the session data
-        session_unset();
         $this->init = false;
         $this->data = [];
 
