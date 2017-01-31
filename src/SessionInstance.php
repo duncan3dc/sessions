@@ -24,19 +24,30 @@ class SessionInstance implements SessionInterface
      */
     protected $data = [];
 
+    /**
+     * @var Cookie $cookie The cookie settings to use.
+     */
+    private $cookie;
+
 
     /**
      * Create a new instance.
      *
      * @param string $name The name of the session
+     * @param Cookie $cookie The cookie settings to use
      */
-    public function __construct($name)
+    public function __construct($name, Cookie $cookie = null)
     {
         if (strlen($name) < 1) {
             throw new \InvalidArgumentException("Cannot start session, no name has been specified");
         }
 
+        if ($cookie === null) {
+            $cookie = Cookie::createFromIni();
+        }
+
         $this->name = $name;
+        $this->cookie = $cookie;
     }
 
 
@@ -53,6 +64,8 @@ class SessionInstance implements SessionInterface
         $this->init = true;
 
         session_cache_limiter(false);
+
+        session_set_cookie_params($this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
 
         session_name($this->name);
 
@@ -181,16 +194,16 @@ class SessionInstance implements SessionInterface
     {
         $this->init();
 
-        unset($_SESSION);
-
+        # Remove the session cookie
         $cookieParams = session_get_cookie_params();
-
         setcookie($this->name, "", 1, $cookieParams['path'],
             $cookieParams['domain'], $cookieParams['secure'], $cookieParams['httponly']);
 
+        # destroy the session
         session_destroy();
 
         # Reset the session data
+        session_unset();
         $this->init = false;
         $this->data = [];
 
