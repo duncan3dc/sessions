@@ -119,6 +119,40 @@ class WebTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testDestroyCookie()
+    {
+        $this->request("destroy.php");
+
+        $cookie = $this->getCookie();
+
+        $this->assertEquals("web", $cookie->getName());
+        $this->assertEquals("deleted", $cookie->getValue());
+        $this->assertLessThan(time(), $cookie->getExpires());
+    }
+
+
+    public function testDestroyEmptiesSession()
+    {
+        $this->request("set.php?key=ok&value=yep");
+        $this->assertRequest("getall.php", [
+            "ok"    =>  "yep",
+        ]);
+
+        # Destroy the session but keep the cookie (malfunctioning client)
+        foreach ($this->cookies as $cookie) {
+            if ($cookie->getName() === "web") {
+                $sessionCookie = $cookie;
+                break;
+            }
+        }
+
+        $this->request("destroy.php");
+        $this->cookies->setCookie($sessionCookie);
+
+        $this->assertRequest("getall.php", []);
+    }
+
+
     public function testCookies()
     {
         $this->request("cookies.php");
