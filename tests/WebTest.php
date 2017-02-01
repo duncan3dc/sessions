@@ -2,7 +2,6 @@
 
 namespace duncan3dc\SessionsTest;
 
-use duncan3dc\ObjectIntruder\Intruder;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
 use GuzzleHttp\Cookie\SetCookie;
@@ -34,8 +33,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
     {
         unset($this->client);
 
-        $cookies = new Intruder($this->cookies);
-        unlink($cookies->filename);
+        $this->cookies->clear();
     }
 
 
@@ -145,7 +143,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
         /** @var SetCookie $cookie */
         $cookie = clone $this->getCookie();
 
-        $this->request("destroy.php", "web1");
+        $this->request("destroy.php");
         $this->cookies->setCookie($cookie);
 
         $this->assertRequest("getall.php", []);
@@ -216,15 +214,19 @@ class WebTest extends \PHPUnit_Framework_TestCase
          * the expiry time on the cookie is extended, and doesn't
          * still end 15 seconds after the session started.
          */
-        sleep(2);
         $time = time();
-        $this->request("cookies.php?lifetime=4");
+        $response = $this->request("cookies.php?lifetime=4");
+
+        $cookie = $response->getHeader("Set-Cookie")[0];
+        $this->assertRegExp(
+            "/^web=[a-z0-9]+; expires=.* GMT; Max-Age=4; path=\/$/",
+            $cookie
+        );
 
         $cookie = $this->getCookie();
 
         # We can't test precisely due to timing issues, but check that it's within one second
-        $this->assertGreaterThan($time + 3, $cookie->getExpires());
-        $this->assertLessThan($time + 5, $cookie->getExpires());
+        $this->assertEquals($time + 4, $cookie->getExpires(), '', 1);
     }
 
 
@@ -263,7 +265,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
         ], $this->cookies->toArray()[0]);
     }
 
-    public function testRefreshCookie()
+    public function testRefreshCookieWithParams()
     {
         $this->request("sub/set.php?key=ok&value=yes");
         $response = $this->request("sub/getall.php");

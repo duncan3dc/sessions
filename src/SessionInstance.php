@@ -221,9 +221,6 @@ class SessionInstance implements SessionInterface
         # Destroy the session to remove all remaining session data (on server)
         session_destroy();
 
-        # Clear the cookie so the client knows the session is gone
-        setcookie($this->name, "", time() - 86400, $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
-
         # Reset the session data
         $this->init = false;
         $this->data = [];

@@ -13,7 +13,6 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
     {
         ini_set('session.gc_probability', 0);
         session_set_cookie_params(30);
-        session_set_save_handler(new SessionHandler);
         $this->session = new SessionInstance("test");
     }
 
