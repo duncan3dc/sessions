@@ -13,6 +13,7 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
     {
         ini_set('session.gc_probability', 0);
         session_set_cookie_params(30);
+        session_set_save_handler(new SessionHandler);
         $this->session = new SessionInstance("test");
     }
 
@@ -180,6 +181,23 @@ class SessionInstanceTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->session->get("one"));
         $this->assertNull($this->session->get("two"));
         $this->assertNull($this->session->get("three"));
+    }
+
+
+    public function testDestroy()
+    {
+        # HHVM doesn't loike accessing a destroyed session, so don't try it
+        if (isset($_ENV["TRAVIS_PHP_VERSION"]) && $_ENV["TRAVIS_PHP_VERSION"] === "hhvm") {
+            $this->markTestSkipped("No internal webserver available on HHVM for web tests");
+            return;
+        }
+
+        $this->session->set("album", "kezia");
+        $this->assertSame("kezia", $this->session->get("album"));
+
+        $this->session->destroy();
+
+        $this->assertSame(null, $this->session->get("album"));
     }
 
 

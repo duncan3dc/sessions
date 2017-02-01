@@ -76,6 +76,10 @@ class SessionInstance implements SessionInterface
 
         session_start();
 
+        /**
+         * If the cookie has a specific lifetime (not unlimited)
+         * then ensure it is extended on each use of the session.
+         */
         if (ini_get("session.use_cookies") && $this->cookie->getLifetime() > 0) {
             setcookie(
                 $this->name, session_id(), time() + $this->cookie->getLifetime(), $this->cookie->getPath(),
@@ -216,6 +220,9 @@ class SessionInstance implements SessionInterface
 
         # Destroy the session to remove all remaining session data (on server)
         session_destroy();
+
+        # Clear the cookie so the client knows the session is gone
+        setcookie($this->name, "", time() - 86400, $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
 
         # Reset the session data
         $this->init = false;

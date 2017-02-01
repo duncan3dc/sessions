@@ -14,16 +14,6 @@ class WebTest extends \PHPUnit_Framework_TestCase
     /** @var Client */
     private $client;
 
-    private function getCookie($name)
-    {
-        /** @var SetCookie $cookie */
-        foreach ($this->cookies->getIterator() as $cookie) {
-            if ($cookie->getName() === $name) {
-                return $cookie;
-            }
-        }
-    }
-
     public function setUp()
     {
         # HHVM no longer has a built in webserver, so don't run these tests
@@ -46,6 +36,16 @@ class WebTest extends \PHPUnit_Framework_TestCase
 
         $cookies = new Intruder($this->cookies);
         unlink($cookies->filename);
+    }
+
+
+    private function getCookie($name = "web")
+    {
+        foreach ($this->cookies as $cookie) {
+            if ($cookie->getName() === $name) {
+                return $cookie;
+            }
+        }
     }
 
 
@@ -89,7 +89,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testDestroy1()
+    public function testDestroy()
     {
         $this->request("set.php?key=ok&value=yep");
         $this->assertRequest("getall.php", [
@@ -99,7 +99,9 @@ class WebTest extends \PHPUnit_Framework_TestCase
         $this->request("destroy.php");
         $this->assertRequest("getall.php", []);
     }
-    public function testDestroy2()
+
+
+    public function testDestroyCorrectsession()
     {
         $this->request("set.php?key=ok&value=web1", "web1");
         $this->assertRequest("getall.php?session_name=web1", [
@@ -119,20 +121,34 @@ class WebTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
+
+    public function testDestroyCookie()
+    {
+        $this->request("destroy.php");
+
+        $cookie = $this->getCookie();
+
+        $this->assertEquals("web", $cookie->getName());
+        $this->assertEquals("deleted", $cookie->getValue());
+        $this->assertLessThan(time(), $cookie->getExpires());
+    }
+
+
     public function testDestroyEmptiesSession()
     {
-        $this->request("set.php?key=ok&value=web1", "web1");
-        $this->assertRequest("getall.php?session_name=web1", [
-            "ok"    =>  "web1",
+        $this->request("set.php?key=ok&value=yep");
+        $this->assertRequest("getall.php", [
+            "ok"    =>  "yep",
         ]);
 
-        # destroy the session but keep the cookie (malfunc client)
+        # Destroy the session but keep the cookie (malfunctioning client)
         /** @var SetCookie $cookie */
-        $cookie = clone $this->getCookie("web1");
+        $cookie = clone $this->getCookie();
+
         $this->request("destroy.php", "web1");
         $this->cookies->setCookie($cookie);
 
-        $this->assertRequest("getall.php?session_name=web1", []);
+        $this->assertRequest("getall.php", []);
     }
 
     public function testDestroyRemovesSession()
@@ -155,74 +171,62 @@ class WebTest extends \PHPUnit_Framework_TestCase
     {
         $this->request("cookies.php");
 
-        $cookie = $this->cookies->toArray()[0];
+        $cookie = $this->getCookie();
 
-        $this->assertEquals("web", $cookie["Name"]);
-        $this->assertEquals("localhost", $cookie["Domain"]);
-        $this->assertEquals("/", $cookie["Path"]);
-        $this->assertEquals(0, $cookie["Max-Age"]);
-        $this->assertEquals(false, $cookie["Secure"]);
-        $this->assertEquals(false, $cookie["HttpOnly"]);
+        $this->assertEquals("web", $cookie->getName());
+        $this->assertEquals("localhost", $cookie->getDomain());
+        $this->assertEquals("/", $cookie->getPath());
+        $this->assertEquals(0, $cookie->getMaxAge());
+        $this->assertEquals(false, $cookie->getSecure());
+        $this->assertEquals(false, $cookie->getHttpOnly());
     }
     public function testCookieLifetime()
     {
         $this->request("cookies.php?lifetime=33");
-
-        $cookie = $this->cookies->toArray()[0];
-
-        $this->assertEquals(33, $cookie["Max-Age"]);
+        $this->assertEquals(33, $this->getCookie()->getMaxAge());
     }
     public function testCookiePath()
     {
         $this->request("cookies.php?path=/admin");
-
-        $cookie = $this->cookies->toArray()[0];
-
-        $this->assertEquals("/admin", $cookie["Path"]);
+        $this->assertEquals("/admin", $this->getCookie()->getPath());
     }
     public function testCookieDomain()
     {
         $this->request("cookies.php?domain=example.com");
-
-        $cookie = $this->cookies->toArray()[0];
-
-        $this->assertEquals("example.com", $cookie["Domain"]);
+        $this->assertEquals("example.com", $this->getCookie()->getDomain());
     }
     public function testCookieSecure()
     {
         $this->request("cookies.php?secure=1");
-
-        $cookie = $this->cookies->toArray()[0];
-
-        $this->assertEquals(true, $cookie["Secure"]);
+        $this->assertEquals(true, $this->getCookie()->getSecure());
     }
     public function testCookieHttpOnly()
     {
         $this->request("cookies.php?httponly=1");
-
-        $cookie = $this->cookies->toArray()[0];
-
-        $this->assertEquals(true, $cookie["HttpOnly"]);
+        $this->assertEquals(true, $this->getCookie()->getHttpOnly());
     }
 
-    public function testDelete()
+
+    public function testRefreshCookie()
     {
-        $this->request("set.php?key=ok&value=no");
-        $this->request("delete.php");
+        $this->request("cookies.php?lifetime=4");
 
-        $this->assertSame(1, $this->cookies->count());
-        $this->assertEquals([
-            'Name' => 'web',
-            'Value' => 'deleted',
-            'Domain' => 'localhost',
-            'Path' => '/',
-            'Max-Age' => '0',
-            'Expires' => 1,
-            'Secure' => false,
-            'Discard' => false,
-            'HttpOnly' => false
-        ], $this->cookies->toArray()[0]);
+        /**
+         * Ensure that when we use the session again 10 seconds later,
+         * the expiry time on the cookie is extended, and doesn't
+         * still end 15 seconds after the session started.
+         */
+        sleep(2);
+        $time = time();
+        $this->request("cookies.php?lifetime=4");
+
+        $cookie = $this->getCookie();
+
+        # We can't test precisely due to timing issues, but check that it's within one second
+        $this->assertGreaterThan($time + 3, $cookie->getExpires());
+        $this->assertLessThan($time + 5, $cookie->getExpires());
     }
+
 
     public function testCookieWithParams()
     {
