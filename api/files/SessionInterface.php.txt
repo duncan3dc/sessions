@@ -59,6 +59,7 @@ interface SessionInterface
      *
      * @param string $key The name of the key to retrieve from session data
      * @param mixed $default The value to use if the current session value is falsy
+     * @param bool $strict Whether to do strict comparisons or not
      *
      * @return mixed
      */
@@ -68,11 +69,11 @@ interface SessionInterface
     /**
      * Unset a value within session data.
      *
-     * @param string|array $data Either the name of the session key to update, or an array of keys to update
+     * @param string $key The name of the session key to delete
      *
      * @return static
      */
-    public function delete($data);
+    public function delete(...$keys);
 
 
     /**

@@ -114,6 +114,7 @@ class Session
      *
      * @param string $key The name of the key to retrieve from session data
      * @param mixed $default The value to use if the current session value is falsy
+     * @param bool $strict Whether to do strict comparisons or not
      *
      * @return mixed
      */
@@ -126,13 +127,13 @@ class Session
     /**
      * Unset a value within session data.
      *
-     * @param string|array $data Either the name of the session key to update, or an array of keys to update
+     * @param string $keys The keys to delete from the session
      *
      * @return void
      */
-    public static function delete($data)
+    public static function delete(...$keys)
     {
-        static::getInstance()->delete($data);
+        static::getInstance()->delete(...$keys);
     }
 
 

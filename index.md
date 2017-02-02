@@ -18,4 +18,5 @@ The main feature of this library is to prevent a user from waiting for a page to
 
 In addition to this the library can also manage namespaced portions of session data (to avoid common clashes) and a flash feature to store data until it is retrieved and then discard it.
 
+<br>
 <p class="message-api">Full <a href='{{ site.baseurl }}/api/namespaces/duncan3dc.Sessions.html'>API documentation</a> is also available.</p>

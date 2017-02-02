@@ -101,6 +101,7 @@ class SessionNamespace implements SessionInterface
         $data = $this->session->getAll();
         foreach ($data as $key => $val) {
             if (mb_substr($key, 0, $length) === $namespace) {
+                $key = mb_substr($key, $length);
                 $values[$key] = $val;
             }
         }
@@ -146,7 +147,7 @@ class SessionNamespace implements SessionInterface
         $values = $this->getAll();
 
         if (count($values) > 0) {
-            $this->delete($values);
+            $this->delete(...array_keys($values));
         }
 
         return $this;

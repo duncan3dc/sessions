@@ -19,6 +19,7 @@ trait SessionTrait
      *
      * @param string $key The name of the key to retrieve from session data
      * @param mixed $default The value to use if the current session value is falsy
+     * @param bool $strict Whether to do strict comparisons or not
      *
      * @return mixed
      */
@@ -64,18 +65,37 @@ trait SessionTrait
      *
      * @return static
      */
-    public function delete($data)
+    public function delete(...$keys)
     {
         # Convert the array of keys to key/value pairs
-        if (is_array($data)) {
-            $keyValues = [];
-            foreach ($data as $key) {
-                $keyValues[$key] = null;
-            }
-            return $this->set($keyValues);
+        $keyValues = [];
+        foreach ($keys as $key) {
+            $keyValues[$key] = null;
         }
 
-        return $this->set($data, null);
+        return $this->set($keyValues);
+    }
+
+
+    /**
+     * Clear all previously set values.
+     *
+     * @return static
+     */
+    public function clear()
+    {
+        # Get all the current session data
+        $values = $this->getAll();
+
+        # Replace all the values with nulls
+        $values = array_map(function ($value) {
+            return null;
+        }, $values);
+
+        # Store all the null values (effectively unsetting the keys)
+        $this->set($values);
+
+        return $this;
     }
 
 

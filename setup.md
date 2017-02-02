@@ -25,6 +25,18 @@ Session::name("my-app");
 
 -----
 
+You can manage the cookies used by the session using the [Cookie](../management/cookies/) class:
+
+~~~php
+use duncan3dc\Sessions\Cookie;
+use duncan3dc\Sessions\SessionInstance;
+
+$cookie = new Cookie;
+$session = new SessionInstance("my-app", $cookie);
+~~~
+
+-----
+
 You should type-hint using the `SessionInterface` rather than the concrete `SessionInstance` class.
 
 ~~~php

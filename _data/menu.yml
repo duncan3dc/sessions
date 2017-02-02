@@ -9,3 +9,6 @@ Usage:
   Flash Data: /usage/flash-data/
   Clearing Data: /usage/clearing-data/
   Get/Set: /usage/get-set/
+
+Management:
+  Cookies: /management/cookies/
