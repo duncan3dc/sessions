@@ -10,4 +10,9 @@ if (isset($_GET["session_name"])) {
     $name = "web";
 }
 
+session_save_path('/tmp/duncan3dc-sessions');
+if (!file_exists(session_save_path())) {
+    mkdir(session_save_path());
+}
+
 $session = new SessionInstance($name);

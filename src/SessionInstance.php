@@ -65,7 +65,12 @@ class SessionInstance implements SessionInterface
 
         session_cache_limiter(false);
 
-        session_set_cookie_params($this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
+        if (ini_get("session.use_cookies")) {
+            session_set_cookie_params(
+                $this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(),
+                $this->cookie->isSecure(), $this->cookie->isHttpOnly()
+            );
+        }
 
         session_name($this->name);
 
@@ -75,9 +80,11 @@ class SessionInstance implements SessionInterface
          * If the cookie has a specific lifetime (not unlimited)
          * then ensure it is extended on each use of the session.
          */
-        if ($this->cookie->getLifetime() > 0) {
-            $expires = time() + $this->cookie->getLifetime();
-            setcookie($this->name, session_id(), $expires, $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
+        if (ini_get("session.use_cookies") && $this->cookie->getLifetime() > 0) {
+            setcookie(
+                $this->name, session_id(), time() + $this->cookie->getLifetime(), $this->cookie->getPath(),
+                $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly()
+            );
         }
 
         # Grab the sessions data to respond to get()
@@ -200,11 +207,19 @@ class SessionInstance implements SessionInterface
         # Start the session up, but ignore the error about headers already being sent
         @session_start();
 
-        # Clear the session data from the server
-        session_destroy();
+        # Delete session as suggested in php docs
+        $_SESSION = [];
 
-        # Clear the cookie so the client knows the session is gone
-        setcookie($this->name, "", time() - 86400, $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
+        # Remove the session cookie
+        if (ini_get("session.use_cookies")) {
+            setcookie(
+                $this->name, "", 1, $this->cookie->getPath(), $this->cookie->getDomain(),
+                $this->cookie->isSecure(), $this->cookie->isHttpOnly()
+            );
+        }
+
+        # Destroy the session to remove all remaining session data (on server)
+        session_destroy();
 
         # Reset the session data
         $this->init = false;
