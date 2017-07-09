@@ -13,11 +13,6 @@ class WebTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        # HHVM no longer has a built in webserver, so don't run these tests
-        if (isset($_ENV["TRAVIS_PHP_VERSION"]) && $_ENV["TRAVIS_PHP_VERSION"] === "hhvm") {
-            $this->markTestSkipped("No internal webserver available on HHVM for web tests");
-        }
-
         $path = tempnam(sys_get_temp_dir(), "duncan3dc-sessions-");
         $this->cookies = new FileCookieJar($path);
 
