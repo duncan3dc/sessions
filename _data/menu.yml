@@ -12,3 +12,4 @@ Usage:
 
 Management:
   Cookies: /management/cookies/
+  Session ID: /management/session-id/

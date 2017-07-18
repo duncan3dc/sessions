@@ -34,3 +34,5 @@ $session = new Session("phpmyadmin", $cookie);
 ---
 
 The API docs linked above show all the available methods.
+
+<p class="message-info">This feature was added in v1.1.0</p>

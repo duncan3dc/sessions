@@ -24,7 +24,7 @@
     <script type="text/javascript">
     function loadExternalCodeSnippets() {
         Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src');
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
             var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
             var language = 'php';
 
@@ -144,28 +144,28 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-885069625"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1137003246"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-885069625" class="accordion-body collapse in">
+            <div id="namespace-1137003246" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1157873394"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1385502619"></a>
                                 <a href="../namespaces/duncan3dc.html" style="margin-left: 30px; padding-left: 0">duncan3dc</a>
             </div>
-            <div id="namespace-1157873394" class="accordion-body collapse ">
+            <div id="namespace-1385502619" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1941613545"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1891893318"></a>
                                 <a href="../namespaces/duncan3dc.Sessions.html" style="margin-left: 30px; padding-left: 0">Sessions</a>
             </div>
-            <div id="namespace-1941613545" class="accordion-body collapse ">
+            <div id="namespace-1891893318" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -335,15 +335,15 @@ All checks are truthy/falsy (so a POST value of &quot;0&quot; is ignored), unles
                 
                                     <h4>Returns</h4>
                     mixed
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                    <dt>File</dt>
-                    <dd><a href="../files/SessionTrait.html"><div class="path-wrapper">SessionTrait.php</div></a></dd>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sessions.SessionTrait.html"><div class="path-wrapper">\duncan3dc\Sessions\SessionTrait</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -373,15 +373,15 @@ All checks are truthy/falsy (so a POST value of &quot;0&quot; is ignored), unles
                 
                                     <h4>Returns</h4>
                     static
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                    <dt>File</dt>
-                    <dd><a href="../files/SessionTrait.html"><div class="path-wrapper">SessionTrait.php</div></a></dd>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sessions.SessionTrait.html"><div class="path-wrapper">\duncan3dc\Sessions\SessionTrait</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -403,15 +403,15 @@ All checks are truthy/falsy (so a POST value of &quot;0&quot; is ignored), unles
                 
                                     <h4>Returns</h4>
                     static
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                    <dt>File</dt>
-                    <dd><a href="../files/SessionTrait.html"><div class="path-wrapper">SessionTrait.php</div></a></dd>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sessions.SessionTrait.html"><div class="path-wrapper">\duncan3dc\Sessions\SessionTrait</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -441,15 +441,15 @@ All checks are truthy/falsy (so a POST value of &quot;0&quot; is ignored), unles
                 
                                     <h4>Returns</h4>
                     mixed
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                    <dt>File</dt>
-                    <dd><a href="../files/SessionTrait.html"><div class="path-wrapper">SessionTrait.php</div></a></dd>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sessions.SessionTrait.html"><div class="path-wrapper">\duncan3dc\Sessions\SessionTrait</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -484,15 +484,15 @@ All checks are truthy/falsy (so a POST value of &quot;0&quot; is ignored), unles
                 
                                     <h4>Returns</h4>
                     static
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                    <dt>File</dt>
-                    <dd><a href="../files/SessionTrait.html"><div class="path-wrapper">SessionTrait.php</div></a></dd>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sessions.SessionTrait.html"><div class="path-wrapper">\duncan3dc\Sessions\SessionTrait</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -522,15 +522,15 @@ All checks are truthy/falsy (so a POST value of &quot;0&quot; is ignored), unles
                 
                                     <h4>Returns</h4>
                     string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                    <dt>File</dt>
-                    <dd><a href="../files/SessionTrait.html"><div class="path-wrapper">SessionTrait.php</div></a></dd>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sessions.SessionTrait.html"><div class="path-wrapper">\duncan3dc\Sessions\SessionTrait</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -588,7 +588,7 @@ All checks are truthy/falsy (so a POST value of &quot;0&quot; is ignored), unles
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on February 2nd, 2017 at 19:37.
+                    on July 18th, 2017 at 22:12.
                 </section>
             </section>
         </section>
