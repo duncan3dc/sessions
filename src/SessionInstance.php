@@ -93,7 +93,9 @@ class SessionInstance implements SessionInterface
             session_id($this->id);
         }
 
-        session_start();
+        session_start([
+            "read_and_close"    =>  true,
+        ]);
 
         /**
          * If the cookie has a specific lifetime (not unlimited)
@@ -109,9 +111,6 @@ class SessionInstance implements SessionInterface
 
         # Grab session ID
         $this->id = session_id();
-
-        # Remove the lock from the session file
-        session_write_close();
     }
 
 
