@@ -12,12 +12,12 @@ class Session
     /**
      * @var string $name The name of the session.
      */
-    protected static $name = "";
+    private static $name = "";
 
     /**
      * @var SessionInterface $session The underlying session instance.
      */
-    protected static $session = null;
+    private static $session = null;
 
     /**
      * Set the name of the session to use.

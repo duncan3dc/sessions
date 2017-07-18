@@ -25,17 +25,17 @@ class SessionInstance implements SessionInterface
     /**
      * @var bool $init Whether the session has been started or not.
      */
-    protected $init = false;
+    private $init = false;
 
     /**
      * @var string $name The name of the session.
      */
-    protected $name = "";
+    private $name = "";
 
     /**
      * @var array $data The cache of the session data.
      */
-    protected $data = [];
+    private $data = [];
 
     /**
      * @var string The session ID
@@ -76,7 +76,7 @@ class SessionInstance implements SessionInterface
      *
      * @return void
      */
-    protected function init()
+    private function init()
     {
         if ($this->init) {
             return;

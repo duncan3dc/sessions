@@ -12,12 +12,12 @@ class SessionNamespace implements SessionInterface
     /**
      * @var string $name The namespace of the session.
      */
-    protected $name;
+    private $name;
 
     /**
      * @var SessionInterface $session The underlying session instance.
      */
-    protected $session;
+    private $session;
 
 
     /**
@@ -38,7 +38,7 @@ class SessionNamespace implements SessionInterface
      *
      * @return string
      */
-    protected function getNamespace(): string
+    private function getNamespace(): string
     {
         return "_ns_{$this->name}_";
     }
@@ -51,7 +51,7 @@ class SessionNamespace implements SessionInterface
      *
      * @return string
      */
-    protected function getNamespacedKey(string $key): string
+    private function getNamespacedKey(string $key): string
     {
         return $this->getNamespace() . $key;
     }

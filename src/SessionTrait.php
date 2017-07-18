@@ -108,7 +108,7 @@ trait SessionTrait
      *
      * @return string
      */
-    protected function flashKey(string $key): string
+    private function flashKey(string $key): string
     {
         return "_fs_{$key}";
     }
