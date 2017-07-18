@@ -4,11 +4,23 @@
 
 --------
 
+## 1.2.0 - 2017-07-18
+
+### Added
+
+* [SessionInstance] Added the ability to use a specific session ID. (Thanks @subins2000)
+
+### Changed
+
+* [Support] Dropped support for HHVM.
+
+--------
+
 ## 1.1.0 - 2017-01-31
 
 ### Added
 
-* [Support] Added support for PHP 7.1The main session handler class.
+* [Support] Added support for PHP 7.1
 * [Cookie] Add a cookie class to managing session cookies.
 
 ### Fixed
