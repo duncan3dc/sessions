@@ -4,8 +4,9 @@ A non-blocking session handler for PHP
 Full documentation is available at http://duncan3dc.github.io/sessions/  
 PHPDoc API documentation is also available at [http://duncan3dc.github.io/sessions/api/](http://duncan3dc.github.io/sessions/api/namespaces/duncan3dc.Sessions.html)  
 
-[![Build Status](https://img.shields.io/travis/duncan3dc/sessions.svg)](https://travis-ci.org/duncan3dc/sessions)
-[![Latest Version](https://img.shields.io/packagist/v/duncan3dc/sessions.svg)](https://packagist.org/packages/duncan3dc/sessions)
+[![Latest Version](https://poser.pugx.org/duncan3dc/sessions/version.svg)](https://packagist.org/packages/duncan3dc/sessions)
+[![Build Status](https://travis-ci.org/duncan3dc/sessions.svg?branch=master)](https://travis-ci.org/duncan3dc/sessions)
+[![Coverage Status](https://coveralls.io/repos/github/duncan3dc/sessions/badge.svg)](https://coveralls.io/github/duncan3dc/sessions)
 
 
 Quick Examples
