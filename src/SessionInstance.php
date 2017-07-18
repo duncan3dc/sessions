@@ -25,6 +25,11 @@ class SessionInstance implements SessionInterface
     protected $data = [];
 
     /**
+     * @var string The session ID
+     */
+    private $id = "";
+
+    /**
      * @var Cookie $cookie The cookie settings to use.
      */
     private $cookie;
@@ -35,8 +40,9 @@ class SessionInstance implements SessionInterface
      *
      * @param string $name The name of the session
      * @param Cookie $cookie The cookie settings to use
+     * @param string $id The session ID to use
      */
-    public function __construct($name, Cookie $cookie = null)
+    public function __construct($name, Cookie $cookie = null, $id = "")
     {
         if (strlen($name) < 1) {
             throw new \InvalidArgumentException("Cannot start session, no name has been specified");
@@ -48,6 +54,7 @@ class SessionInstance implements SessionInterface
 
         $this->name = $name;
         $this->cookie = $cookie;
+        $this->id = $id;
     }
 
 
@@ -69,6 +76,10 @@ class SessionInstance implements SessionInterface
 
         session_name($this->name);
 
+        if ($this->id !== "") {
+            session_id($this->id);
+        }
+
         session_start();
 
         /**
@@ -83,8 +94,24 @@ class SessionInstance implements SessionInterface
         # Grab the sessions data to respond to get()
         $this->data = $_SESSION;
 
+        # Grab session ID
+        $this->id = session_id();
+
         # Remove the lock from the session file
         session_write_close();
+    }
+
+
+    /**
+     * Get the session ID.
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        $this->init();
+
+        return $this->id;
     }
 
 
