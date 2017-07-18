@@ -3,6 +3,7 @@
 namespace duncan3dc\SessionsTest;
 
 use duncan3dc\ObjectIntruder\Intruder;
+use duncan3dc\Sessions\SessionInstance;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
 
@@ -13,6 +14,8 @@ class WebTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        session_set_save_handler(new \SessionHandler);
+
         $path = tempnam(sys_get_temp_dir(), "duncan3dc-sessions-");
         $this->cookies = new FileCookieJar($path);
 
@@ -185,6 +188,17 @@ class WebTest extends \PHPUnit_Framework_TestCase
     {
         $this->request("cookies.php?httponly=1");
         $this->assertEquals(true, $this->getCookie()->getHttpOnly());
+    }
+
+
+    public function testSessionIDReuse()
+    {
+        $response = $this->request("use-id.php?session_name=web-sockets&key=using&value=ID");
+        $id = (string) $response->getBody();
+
+        # Ensure that we can retrieve values here that were set via the web browser
+        $session = new SessionInstance("web-sockets", null, $id);
+        $this->assertEquals("ID", $session->get("using"));
     }
 
 
