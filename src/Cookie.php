@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sessions;
 
-class Cookie
+class Cookie implements CookieInterface
 {
     /**
      * @var int $lifetime The lifetime of the session cookie in seconds.

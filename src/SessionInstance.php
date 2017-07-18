@@ -43,7 +43,7 @@ class SessionInstance implements SessionInterface
     private $id = "";
 
     /**
-     * @var Cookie $cookie The cookie settings to use.
+     * @var CookieInterface $cookie The cookie settings to use.
      */
     private $cookie;
 
@@ -52,10 +52,10 @@ class SessionInstance implements SessionInterface
      * Create a new instance.
      *
      * @param string $name The name of the session
-     * @param Cookie $cookie The cookie settings to use
+     * @param CookieInterface $cookie The cookie settings to use
      * @param string $id The session ID to use
      */
-    public function __construct($name, Cookie $cookie = null, $id = "")
+    public function __construct($name, CookieInterface $cookie = null, $id = "")
     {
         if (strlen($name) < 1) {
             throw new \InvalidArgumentException("Cannot start session, no name has been specified");
