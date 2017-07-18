@@ -14,9 +14,9 @@ interface SessionInterface
      *
      * @param string $name The namespace of the session
      *
-     * @return SessionNamespace
+     * @return SessionInterface
      */
-    public function createNamespace($name);
+    public function createNamespace(string $name): SessionInterface;
 
 
     /**
@@ -26,7 +26,7 @@ interface SessionInterface
      *
      * @return mixed
      */
-    public function get($key);
+    public function get(string $key);
 
 
     /**
@@ -34,7 +34,7 @@ interface SessionInterface
      *
      * @return array
      */
-    public function getAll();
+    public function getAll(): array;
 
 
     /**
@@ -43,9 +43,9 @@ interface SessionInterface
      * @param string|array $data Either the name of the session key to update, or an array of keys to update
      * @param mixed $value If $data is a string then store this value in the session data
      *
-     * @return static
+     * @return SessionInterface
      */
-    public function set($data, $value = null);
+    public function set($data, $value = null): SessionInterface;
 
 
     /**
@@ -63,25 +63,25 @@ interface SessionInterface
      *
      * @return mixed
      */
-    public function getSet($key, $default = null, $strict = false);
+    public function getSet(string $key, $default = null, bool $strict = false);
 
 
     /**
      * Unset a value within session data.
      *
-     * @param string $key The name of the session key to delete
+     * @param string[] $keys The name of the keys to delete
      *
-     * @return static
+     * @return SessionInterface
      */
-    public function delete(...$keys);
+    public function delete(string ...$keys): SessionInterface;
 
 
     /**
      * Clear all previously set values.
      *
-     * @return static
+     * @return SessionInterface
      */
-    public function clear();
+    public function clear(): SessionInterface;
 
 
     /**
@@ -91,7 +91,7 @@ interface SessionInterface
      *
      * @return mixed
      */
-    public function getFlash($key);
+    public function getFlash(string $key);
 
 
     /**
@@ -100,7 +100,7 @@ interface SessionInterface
      * @param string $key The name of the flash value to update
      * @param mixed $value The value to store against the key
      *
-     * @return static
+     * @return SessionInterface
      */
-    public function setFlash($key, $value);
+    public function setFlash(string $key, $value): SessionInterface;
 }

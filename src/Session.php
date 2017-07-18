@@ -15,7 +15,7 @@ class Session
     protected static $name = "";
 
     /**
-     * @var SessionInstance $session The underlying session instance.
+     * @var SessionInterface $session The underlying session instance.
      */
     protected static $session = null;
 
@@ -26,7 +26,7 @@ class Session
      *
      * @return void
      */
-    public static function name($name)
+    public static function name(string $name)
     {
         static::$name = $name;
         static::$session = null;
@@ -40,7 +40,7 @@ class Session
      *
      * @return void
      */
-    public static function setInstance(SessionInterface $session)
+    public static function setInstance(SessionInterface $session): void
     {
         static::$session = $session;
     }
@@ -51,9 +51,9 @@ class Session
      *
      * @return SessionInterface
      */
-    public static function getInstance()
+    public static function getInstance(): SessionInterface
     {
-        if (static::$session instanceof SessionInstance) {
+        if (static::$session instanceof SessionInterface) {
             return static::$session;
         }
 
@@ -72,9 +72,9 @@ class Session
      *
      * @param string $name The namespace of the session
      *
-     * @return SessionNamespace
+     * @return SessionInterface
      */
-    public static function createNamespace($name)
+    public static function createNamespace(string $name): SessionInterface
     {
         return static::getInstance()->createNamespace($name);
     }
@@ -87,7 +87,7 @@ class Session
      *
      * @return mixed
      */
-    public static function get($key)
+    public static function get(string $key)
     {
         return static::getInstance()->get($key);
     }
@@ -98,7 +98,7 @@ class Session
      *
      * @return array
      */
-    public static function getAll()
+    public static function getAll(): array
     {
         return static::getInstance()->getAll();
     }
@@ -133,7 +133,7 @@ class Session
      *
      * @return mixed
      */
-    public static function getSet($key, $default = null, $strict = false)
+    public static function getSet(string $key, $default = null, bool $strict = false)
     {
         return static::getInstance()->getSet($key, $default, $strict);
     }
@@ -146,7 +146,7 @@ class Session
      *
      * @return void
      */
-    public static function delete(...$keys)
+    public static function delete(string ...$keys)
     {
         static::getInstance()->delete(...$keys);
     }
@@ -170,7 +170,7 @@ class Session
      *
      * @return mixed
      */
-    public static function getFlash($key)
+    public static function getFlash(string $key)
     {
         return static::getInstance()->getFlash($key);
     }
@@ -184,7 +184,7 @@ class Session
      *
      * @return void
      */
-    public static function setFlash($key, $value)
+    public static function setFlash(string $key, $value)
     {
         static::getInstance()->setFlash($key, $value);
     }

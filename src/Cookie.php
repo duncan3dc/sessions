@@ -33,9 +33,9 @@ class Cookie implements CookieInterface
     /**
      * Create a new instance from the current environment settings.
      *
-     * @param string $name The name of the session
+     * @return CookieInterface
      */
-    public static function createFromIni()
+    public static function createFromIni(): CookieInterface
     {
         $params = session_get_cookie_params();
 
@@ -53,12 +53,12 @@ class Cookie implements CookieInterface
      *
      * @param int $lifetime The lifetime of the session cookie in seconds.
      *
-     * @return static
+     * @return CookieInterface
      */
-    public function withLifetime($lifetime)
+    public function withLifetime(int $lifetime): CookieInterface
     {
         $cookie = clone $this;
-        $cookie->lifetime = (int) $lifetime;
+        $cookie->lifetime = $lifetime;
         return $cookie;
     }
 
@@ -68,7 +68,7 @@ class Cookie implements CookieInterface
      *
      * @return int The lifetime of the session cookie in seconds.
      */
-    public function getLifetime()
+    public function getLifetime(): int
     {
         return $this->lifetime;
     }
@@ -79,12 +79,12 @@ class Cookie implements CookieInterface
      *
      * @param string $path Path on the domain where the cookie will work.
      *
-     * @return static
+     * @return CookieInterface
      */
-    public function withPath($path)
+    public function withPath(string $path): CookieInterface
     {
         $cookie = clone $this;
-        $cookie->path = (string) $path;
+        $cookie->path = $path;
         return $cookie;
     }
 
@@ -94,7 +94,7 @@ class Cookie implements CookieInterface
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -105,12 +105,12 @@ class Cookie implements CookieInterface
      *
      * @param string $domain The domain the cookie should be sent to.
      *
-     * @return static
+     * @return CookieInterface
      */
-    public function withDomain($domain)
+    public function withDomain(string $domain): CookieInterface
     {
         $cookie = clone $this;
-        $cookie->domain = (string) $domain;
+        $cookie->domain = $domain;
         return $cookie;
     }
 
@@ -120,7 +120,7 @@ class Cookie implements CookieInterface
      *
      * @param string
      */
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->domain;
     }
@@ -131,12 +131,12 @@ class Cookie implements CookieInterface
      *
      * @param bool $secure Only send over secure connections.
      *
-     * @return static
+     * @return CookieInterface
      */
-    public function withSecure($secure)
+    public function withSecure(bool $secure): CookieInterface
     {
         $cookie = clone $this;
-        $cookie->secure = (bool) $secure;
+        $cookie->secure = $secure;
         return $cookie;
     }
 
@@ -146,7 +146,7 @@ class Cookie implements CookieInterface
      *
      * @return bool
      */
-    public function isSecure()
+    public function isSecure(): bool
     {
         return $this->secure;
     }
@@ -157,9 +157,9 @@ class Cookie implements CookieInterface
      *
      * @param bool $httponly Use the HTTP only flag.
      *
-     * @return static
+     * @return CookieInterface
      */
-    public function withHttpOnly($httponly)
+    public function withHttpOnly(bool $httponly): CookieInterface
     {
         $cookie = clone $this;
         $cookie->httponly = (bool) $httponly;
@@ -172,7 +172,7 @@ class Cookie implements CookieInterface
      *
      * @return bool
      */
-    public function isHttpOnly()
+    public function isHttpOnly(): bool
     {
         return $this->httponly;
     }

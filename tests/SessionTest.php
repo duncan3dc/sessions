@@ -20,7 +20,7 @@ class SessionTest extends TestCase
 
     public function setUp()
     {
-        $this->session = Mockery::mock(SessionInstance::class);
+        $this->session = Mockery::mock(SessionInterface::class);
 
         # Don't use the mocked instance when we're testing getInstance()
         if (substr($this->getName(), 0, 15) === "testGetInstance") {
@@ -186,9 +186,10 @@ class SessionTest extends TestCase
 
     public function testCreateNamespace()
     {
-        $this->session->shouldReceive("createNamespace")->once()->with("extra")->andReturn("ok");
+        $namespace = Mockery::mock(SessionInterface::class);
+        $this->session->shouldReceive("createNamespace")->once()->with("extra")->andReturn($namespace);
         $result = Session::createNamespace("extra");
-        $this->assertSame("ok", $result);
+        $this->assertSame($namespace, $result);
     }
 
 

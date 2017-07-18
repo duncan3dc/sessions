@@ -2,19 +2,27 @@
 
 namespace duncan3dc\SessionsTest;
 
+use duncan3dc\Sessions\SessionInterface;
 use duncan3dc\Sessions\SessionNamespace;
-use duncan3dc\Sessions\SessionInstance;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class SessionNamespaceTest extends TestCase
 {
-    protected $session;
-    protected $namespace;
+    /**
+     * @var SessionNamespace $namespace The instance we are testing.
+     */
+    private $namespace;
+
+    /**
+     * @var Mockery $session A session instance to use for testing.
+     */
+    private $session;
+
 
     public function setUp()
     {
-        $this->session = Mockery::mock(SessionInstance::class);
+        $this->session = Mockery::mock(SessionInterface::class);
         $this->namespace = new SessionNamespace("test", $this->session);
     }
 

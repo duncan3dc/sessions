@@ -10,6 +10,7 @@ use GuzzleHttp\Cookie\CookieJarInterface;
 use GuzzleHttp\Cookie\FileCookieJar;
 use function exec;
 use GuzzleHttp\Cookie\SetCookie;
+use Psr\Http\Message\ResponseInterface;
 use function session_set_save_handler;
 use function sleep;
 use function strpos;
@@ -83,7 +84,7 @@ class WebTest extends TestCase
      *
      * @return SetCookie
      */
-    private function getCookie($name = "web")
+    private function getCookie($name = "web"): SetCookie
     {
         foreach ($this->cookies as $cookie) {
             if ($cookie->getName() === $name) {
@@ -93,7 +94,15 @@ class WebTest extends TestCase
     }
 
 
-    private function request($path, $name = null)
+    /**
+     * Send a request to the testing backend.
+     *
+     * @param string $path The path to send the request to
+     * @param ?string $name The name of the session to use
+     *
+     * @return ResponseInterface
+     */
+    private function request(string $path, string $name = null): ResponseInterface
     {
         if ($name !== null) {
             if (strpos($path, "?")) {
@@ -108,9 +117,17 @@ class WebTest extends TestCase
     }
 
 
-    private function assertRequest($request, array $expected)
+    /**
+     * Send a request to the testing backend and compare the response.
+     *
+     * @param string $path The path to send the request to
+     * @param array $expected The expected response data
+     *
+     * @return void
+     */
+    private function assertRequest(string $path, array $expected): void
     {
-        $response = $this->request($request);
+        $response = $this->request($path);
         $body = (string) $response->getBody();
         $result = unserialize($body);
 

@@ -8,7 +8,11 @@ use PHPUnit\Framework\TestCase;
 
 class SessionInstanceTest extends TestCase
 {
-    protected $session;
+    /**
+     * @var SessionInstance $session The instance we are testing.
+     */
+    private $session;
+
 
     public function setUp()
     {

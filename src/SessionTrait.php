@@ -11,7 +11,7 @@ trait SessionTrait
 {
 
     /**
-     * This is a convenience method to prevent having to do several checks/set for all persistant variables.
+     * This is a convenience method to prevent having to do several checks/set for all persistent variables.
      *
      * If the key name has been passed via POST then that value is stored in the session and returned.
      * If the key name has been passed via GET then that value is stored in the session and returned.
@@ -20,12 +20,12 @@ trait SessionTrait
      * All checks are truthy/falsy (so a POST value of "0" is ignored), unless the 3rd parameter is set to true.
      *
      * @param string $key The name of the key to retrieve from session data
-     * @param mixed $default The value to use if the current session value is falsy
+     * @param mixed $default The value to use if the current session value is falsey
      * @param bool $strict Whether to do strict comparisons or not
      *
      * @return mixed
      */
-    public function getSet($key, $default = null, $strict = false)
+    public function getSet(string $key, $default = null, bool $strict = false)
     {
         # If this key was just submitted via post then store it in the session data
         if (isset($_POST[$key])) {
@@ -63,11 +63,11 @@ trait SessionTrait
     /**
      * Unset a value within session data.
      *
-     * @param string|array $data Either the name of the session key to update, or an array of keys to update
+     * @param string[] $keys All the keys to remove from the session
      *
-     * @return static
+     * @return SessionInterface
      */
-    public function delete(...$keys)
+    public function delete(string ...$keys): SessionInterface
     {
         # Convert the array of keys to key/value pairs
         $keyValues = [];
@@ -82,9 +82,9 @@ trait SessionTrait
     /**
      * Clear all previously set values.
      *
-     * @return static
+     * @return SessionInterface
      */
-    public function clear()
+    public function clear(): SessionInterface
     {
         # Get all the current session data
         $values = $this->getAll();
@@ -108,7 +108,7 @@ trait SessionTrait
      *
      * @return string
      */
-    protected function flashKey($key)
+    protected function flashKey(string $key): string
     {
         return "_fs_{$key}";
     }
@@ -121,7 +121,7 @@ trait SessionTrait
      *
      * @return mixed
      */
-    public function getFlash($key)
+    public function getFlash(string $key)
     {
         $key = $this->flashKey($key);
 
@@ -139,9 +139,9 @@ trait SessionTrait
      * @param string $key The name of the flash value to update
      * @param mixed $value The value to store against the key
      *
-     * @return static
+     * @return SessionInterface
      */
-    public function setFlash($key, $value)
+    public function setFlash(string $key, $value): SessionInterface
     {
         $key = $this->flashKey($key);
 

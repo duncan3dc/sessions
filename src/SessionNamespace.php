@@ -15,7 +15,7 @@ class SessionNamespace implements SessionInterface
     protected $name;
 
     /**
-     * @var SessionInstance $session The underlying session instance.
+     * @var SessionInterface $session The underlying session instance.
      */
     protected $session;
 
@@ -24,9 +24,9 @@ class SessionNamespace implements SessionInterface
      * Create a new namespaced portion of a session.
      *
      * @param string $name The namespace of the session
-     * @param SessionInstance $session The session instance to use
+     * @param SessionInterface $session The session instance to use
      */
-    public function __construct($name, SessionInstance $session)
+    public function __construct(string $name, SessionInterface $session)
     {
         $this->name = $name;
         $this->session = $session;
@@ -38,7 +38,7 @@ class SessionNamespace implements SessionInterface
      *
      * @return string
      */
-    protected function getNamespace()
+    protected function getNamespace(): string
     {
         return "_ns_{$this->name}_";
     }
@@ -51,7 +51,7 @@ class SessionNamespace implements SessionInterface
      *
      * @return string
      */
-    protected function getNamespacedKey($key)
+    protected function getNamespacedKey(string $key): string
     {
         return $this->getNamespace() . $key;
     }
@@ -62,9 +62,9 @@ class SessionNamespace implements SessionInterface
      *
      * @param string $name The namespace of the session
      *
-     * @return SessionNamespace
+     * @return SessionInterface
      */
-    public function createNamespace($name)
+    public function createNamespace(string $name): SessionInterface
     {
         $name = $this->getNamespacedKey($name);
         return new SessionNamespace($name, $this->session);
@@ -78,7 +78,7 @@ class SessionNamespace implements SessionInterface
      *
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         $key = $this->getNamespacedKey($key);
 
@@ -91,7 +91,7 @@ class SessionNamespace implements SessionInterface
      *
      * @return array
      */
-    public function getAll()
+    public function getAll(): array
     {
         $namespace = $this->getNamespace();
         $length = mb_strlen($namespace);
@@ -116,9 +116,9 @@ class SessionNamespace implements SessionInterface
      * @param string|array $data Either the name of the session key to update, or an array of keys to update
      * @param mixed $value If $data is a string then store this value in the session data
      *
-     * @return static
+     * @return SessionInterface
      */
-    public function set($data, $value = null)
+    public function set($data, $value = null): SessionInterface
     {
         if (is_array($data)) {
             $newData = [];
@@ -140,9 +140,9 @@ class SessionNamespace implements SessionInterface
     /**
      * Tear down the session and wipe all it's data.
      *
-     * @return static
+     * @return SessionInterface
      */
-    public function clear()
+    public function clear(): SessionInterface
     {
         $values = $this->getAll();
 
