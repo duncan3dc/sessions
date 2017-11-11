@@ -36,7 +36,7 @@ class Session
      *
      * @return void
      */
-    protected static function getInstance()
+    public static function getInstance()
     {
         if (static::$session instanceof SessionInstance) {
             return static::$session;

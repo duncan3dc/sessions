@@ -4,6 +4,14 @@
 
 --------
 
+## 1.3.0 - 2017-11-11
+
+### Added
+
+* [Session] Added a getInstance() method to get the SessionInstance.
+
+--------
+
 ## 1.2.0 - 2017-07-18
 
 ### Added
