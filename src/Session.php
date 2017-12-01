@@ -36,7 +36,7 @@ class Session
     /**
      * Ensure the session instance has been created.
      *
-     * @return void
+     * @return SessionInterface
      */
     public static function getInstance()
     {
