@@ -17,8 +17,8 @@
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.2",
-        "mockery/mockery": "^0.9.4",
-        "duncan3dc/object-intruder": "^0.1.0",
+        "mockery/mockery": "^1.0",
+        "duncan3dc/object-intruder": "^0.3.0",
         "php-coveralls/php-coveralls": "^2.0",
         "phpunit/phpunit": "^5.0"
     },
