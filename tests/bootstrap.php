@@ -4,7 +4,7 @@ namespace duncan3dc\SessionsTest;
 
 require __DIR__ . "/../vendor/autoload.php";
 
-const SERVER_PORT = 5355;
+const SERVER_PORT = 15377;
 
 # Start the internal web server for cookie based tests
 exec("php -S localhost:" . SERVER_PORT . " -t " . __DIR__ . "/web >/dev/null 2>&1 & echo $!", $output, $status);
