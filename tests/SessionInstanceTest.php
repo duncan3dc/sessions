@@ -3,6 +3,7 @@
 namespace duncan3dc\SessionsTest;
 
 use duncan3dc\Sessions\SessionInstance;
+use function session_set_save_handler;
 
 class SessionInstanceTest extends \PHPUnit_Framework_TestCase
 {

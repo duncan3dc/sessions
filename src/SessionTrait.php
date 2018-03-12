@@ -2,6 +2,8 @@
 
 namespace duncan3dc\Sessions;
 
+use function array_map;
+
 /**
  * Common session functionality.
  */

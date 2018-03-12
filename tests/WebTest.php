@@ -6,6 +6,14 @@ use duncan3dc\ObjectIntruder\Intruder;
 use duncan3dc\Sessions\SessionInstance;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
+use function session_set_save_handler;
+use function sleep;
+use function strpos;
+use function sys_get_temp_dir;
+use function tempnam;
+use function time;
+use function unlink;
+use function unserialize;
 
 class WebTest extends \PHPUnit_Framework_TestCase
 {

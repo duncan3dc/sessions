@@ -2,6 +2,19 @@
 
 namespace duncan3dc\Sessions;
 
+use function array_key_exists;
+use function is_array;
+use function session_cache_limiter;
+use function session_destroy;
+use function session_id;
+use function session_name;
+use function session_set_cookie_params;
+use function session_start;
+use function session_write_close;
+use function setcookie;
+use function strlen;
+use function time;
+
 /**
  * A non-blocking session manager.
  */

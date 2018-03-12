@@ -2,6 +2,9 @@
 
 namespace duncan3dc\SessionsTest;
 
+use function exec;
+use function register_shutdown_function;
+
 require __DIR__ . "/../vendor/autoload.php";
 
 const SERVER_PORT = 15377;

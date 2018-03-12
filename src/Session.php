@@ -2,6 +2,8 @@
 
 namespace duncan3dc\Sessions;
 
+use function strlen;
+
 /**
  * A static interface for SessionInstance.
  */
