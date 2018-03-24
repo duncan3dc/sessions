@@ -34,6 +34,19 @@ class Session
 
 
     /**
+     * Inject the session instance to use.
+     *
+     * @param SessionInterface $session The instance to use
+     *
+     * @return void
+     */
+    public static function setInstance(SessionInterface $session)
+    {
+        static::$session = $session;
+    }
+
+
+    /**
      * Ensure the session instance has been created.
      *
      * @return SessionInterface
