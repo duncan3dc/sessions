@@ -3,8 +3,8 @@
 namespace duncan3dc\SessionsTest;
 
 use duncan3dc\Sessions\SessionInstance;
-use function session_set_save_handler;
 use PHPUnit\Framework\TestCase;
+use function session_set_save_handler;
 
 class SessionInstanceTest extends TestCase
 {
@@ -21,12 +21,10 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Cannot start session, no name has been specified
-     */
     public function testConstructor()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Cannot start session, no name has been specified");
         new SessionInstance("");
     }
 

@@ -6,9 +6,9 @@ use duncan3dc\Sessions\Session;
 use duncan3dc\Sessions\SessionInstance;
 use duncan3dc\Sessions\SessionInterface;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 use function session_name;
 use function substr;
-use PHPUnit\Framework\TestCase;
 
 class SessionTest extends TestCase
 {

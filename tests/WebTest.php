@@ -8,9 +8,10 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJarInterface;
 use GuzzleHttp\Cookie\FileCookieJar;
-use function exec;
 use GuzzleHttp\Cookie\SetCookie;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use function exec;
 use function session_set_save_handler;
 use function sleep;
 use function strpos;
@@ -19,7 +20,6 @@ use function tempnam;
 use function time;
 use function unlink;
 use function unserialize;
-use PHPUnit\Framework\TestCase;
 
 class WebTest extends TestCase
 {
