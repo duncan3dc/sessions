@@ -8,19 +8,18 @@ use Mockery;
 
 class SessionTest extends \PHPUnit_Framework_TestCase
 {
-    protected $session;
+    /**
+     * @var Mockery $session A SessionInstance to use for testing.
+     */
+    private $session;
+
 
     public function setUp()
     {
-        Session::name("test");
-
         $this->session = Mockery::mock(SessionInstance::class);
-
-        $reflection = new \ReflectionClass(Session::class);
-        $session = $reflection->getProperty("session");
-        $session->setAccessible(true);
-        $session->setValue($this->session);
+        Session::setInstance($this->session);
     }
+
 
     public function tearDown()
     {
