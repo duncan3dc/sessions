@@ -4,7 +4,10 @@ namespace duncan3dc\SessionsTest;
 
 use duncan3dc\Sessions\Session;
 use duncan3dc\Sessions\SessionInstance;
+use duncan3dc\Sessions\SessionInterface;
 use Mockery;
+use function session_name;
+use function substr;
 
 class SessionTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,6 +20,12 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->session = Mockery::mock(SessionInstance::class);
+
+        # Don't use the mocked instance when we're testing getInstance()
+        if (substr($this->getName(), 0, 15) === "testGetInstance") {
+            return;
+        }
+
         Session::setInstance($this->session);
     }
 
@@ -24,6 +33,45 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         Mockery::close();
+    }
+
+
+    public function testSetInstance()
+    {
+        $session = Mockery::mock(SessionInstance::class);
+        Session::setInstance($session);
+        $this->assertSame($session, Session::getInstance());
+    }
+
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testGetInstance1()
+    {
+        Session::name("specific-name-234rf387h");
+        $session = Session::getInstance();
+
+        # Ensure we get a session instance
+        $this->assertInstanceOf(SessionInterface::class, $session);
+
+        # Ensure we get the same instance on subsequent calls
+        $this->assertSame($session, Session::getInstance());
+
+        # Ensure the session name has been used
+        $session->getId();
+        $this->assertSame("specific-name-234rf387h", session_name());
+    }
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testGetInstance2()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Cannot start session, no name has been specified, you must call Session::name() before using this class");
+        Session::getInstance();
     }
 
 
