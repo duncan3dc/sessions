@@ -4,6 +4,16 @@
 
 --------
 
+## 1.4.0 - 2018-04-02
+
+### Added
+
+* [Session] Added a setInstance() method to set the SessionInstance.
+* [SessionInstance] Added a regenerate() method to update the session ID.
+* [Support] Added support for PHP 7.2.
+
+--------
+
 ## 1.3.0 - 2017-11-11
 
 ### Added
