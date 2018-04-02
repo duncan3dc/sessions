@@ -5,8 +5,11 @@ namespace duncan3dc\SessionsTest;
 use duncan3dc\ObjectIntruder\Intruder;
 use duncan3dc\Sessions\SessionInstance;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Cookie\CookieJarInterface;
 use GuzzleHttp\Cookie\FileCookieJar;
 use function exec;
+use GuzzleHttp\Cookie\SetCookie;
 use function session_set_save_handler;
 use function sleep;
 use function strpos;
@@ -21,8 +24,16 @@ class WebTest extends \PHPUnit_Framework_TestCase
     const SERVER_PORT = 15377;
     private static $pid;
 
+    /**
+     * @var CookieJarInterface $cookies The cookies from the latest response.
+     */
     private $cookies;
+
+    /**
+     * @var ClientInterface $client A HTTP client to use for testing.
+     */
     private $client;
+
 
     public static function setUpBeforeClass()
     {
@@ -64,6 +75,13 @@ class WebTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * Get a cookie from the latest response
+     *
+     * @param string $name The name of the cookie to get
+     *
+     * @return SetCookie
+     */
     private function getCookie($name = "web")
     {
         foreach ($this->cookies as $cookie) {
