@@ -250,6 +250,19 @@ class WebTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testRegenerate()
+    {
+        $this->request("set.php?key=under&value=oath");
+        $this->assertRequest("getall.php", ["under" => "oath"]);
+        $sessionId = $this->getCookie()->getValue();
+
+        # Ensure the session data is still available, and the session ID has been changed
+        $this->request("regenerate.php");
+        $this->assertRequest("getall.php", ["under" => "oath"]);
+        $this->assertNotSame($sessionId, $this->getCookie()->getValue());
+    }
+
+
     public function testRefreshCookie()
     {
         $this->request("cookies.php?lifetime=4");

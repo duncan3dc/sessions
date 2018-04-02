@@ -129,6 +129,29 @@ class SessionInstance implements SessionInterface
 
 
     /**
+     * Update the current session id with a newly generated one.
+     *
+     * @return string The new session ID
+     */
+    public function regenerate()
+    {
+        $this->init();
+
+        # Generate a new session
+        session_start();
+        session_regenerate_id();
+
+        # Get the newly generated ID
+        $this->id = session_id();
+
+        # Remove the lock from the session file
+        session_write_close();
+
+        return $this->id;
+    }
+
+
+    /**
      * Create a new namespaced section of this session to avoid clashes.
      *
      * @param string $name The namespace of the session
