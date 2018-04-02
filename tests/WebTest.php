@@ -6,6 +6,7 @@ use duncan3dc\ObjectIntruder\Intruder;
 use duncan3dc\Sessions\SessionInstance;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
+use function exec;
 use function session_set_save_handler;
 use function sleep;
 use function strpos;
@@ -17,8 +18,29 @@ use function unserialize;
 
 class WebTest extends \PHPUnit_Framework_TestCase
 {
+    const SERVER_PORT = 15377;
+    private static $pid;
+
     private $cookies;
     private $client;
+
+    public static function setUpBeforeClass()
+    {
+        # Start the internal web server for cookie based tests
+        exec("php -S localhost:" . self::SERVER_PORT . " -t " . __DIR__ . "/web >/dev/null 2>&1 & echo $!", $output, $status);
+        self::$pid = (int) $output[0];
+
+        # Give the server a second to start up
+        sleep(1);
+    }
+
+
+    public static function tearDownAfterClass()
+    {
+        # Ensure the internal web server is killed when the tests end
+        exec("kill " . self::$pid);
+    }
+
 
     public function setUp()
     {
@@ -63,7 +85,7 @@ class WebTest extends \PHPUnit_Framework_TestCase
             $path .= "session_name={$name}";
         }
 
-        return $this->client->request("GET", "http://localhost:" . SERVER_PORT . "/{$path}");
+        return $this->client->request("GET", "http://localhost:" . self::SERVER_PORT . "/{$path}");
     }
 
 
