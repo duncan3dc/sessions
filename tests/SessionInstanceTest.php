@@ -67,6 +67,14 @@ class SessionInstanceTest extends TestCase
     }
 
 
+    public function testRegenerate()
+    {
+        $originalId = session_id();
+        $result = $this->session->regenerate();
+        $this->assertNotSame($originalId, $result);
+    }
+
+
     public function testSerialize()
     {
         $obj = new \stdClass;
