@@ -13,7 +13,7 @@
     }],
     "require": {
         "ext-session": "*",
-        "php": "^7.0"
+        "php": "^7.1"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3",
