@@ -18,8 +18,9 @@ use function tempnam;
 use function time;
 use function unlink;
 use function unserialize;
+use PHPUnit\Framework\TestCase;
 
-class WebTest extends \PHPUnit_Framework_TestCase
+class WebTest extends TestCase
 {
     const SERVER_PORT = 15377;
     private static $pid;
