@@ -21,8 +21,12 @@ script:
   - vendor/bin/phpunit --stderr --coverage-clover=clover.xml
   - tests/lint.sh
 
-after_success:
-  - vendor/bin/php-coveralls
+jobs:
+  include:
+    - stage: coverage
+      script:
+        - vendor/bin/phpunit --coverage-clover=clover.xml
+        - vendor/bin/php-coveralls
 
 git:
   depth: 5
