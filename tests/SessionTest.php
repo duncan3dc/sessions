@@ -8,8 +8,9 @@ use duncan3dc\Sessions\SessionInterface;
 use Mockery;
 use function session_name;
 use function substr;
+use PHPUnit\Framework\TestCase;
 
-class SessionTest extends \PHPUnit_Framework_TestCase
+class SessionTest extends TestCase
 {
     /**
      * @var Mockery $session A SessionInstance to use for testing.
@@ -86,7 +87,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     public function testSetString()
     {
         $this->session->shouldReceive("set")->once()->with("one", "1");
-        Session::set("one", "1");
+        $result = Session::set("one", "1");
+        $this->assertNull($result);
     }
 
 

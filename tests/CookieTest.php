@@ -4,8 +4,9 @@ namespace duncan3dc\SessionsTest;
 
 use duncan3dc\Sessions\Cookie;
 use function session_set_cookie_params;
+use PHPUnit\Framework\TestCase;
 
-class CookieTest extends \PHPUnit_Framework_TestCase
+class CookieTest extends TestCase
 {
 
     public function testGetLifetime()
