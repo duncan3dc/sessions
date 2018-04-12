@@ -11,9 +11,13 @@ matrix:
   allow_failures:
   - php: nightly
 
+env:
+  - COMPOSER_OPTS=""
+  - COMPOSER_OPTS="--prefer-lowest"
+
 install:
   - composer self-update --snapshot
-  - composer update -n
+  - composer update $COMPOSER_OPTS
 
 script:
   - vendor/bin/phpunit --stderr --coverage-clover=clover.xml
