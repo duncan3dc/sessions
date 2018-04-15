@@ -4,6 +4,23 @@
 
 --------
 
+## 2.0.0 - 2018-04-15
+
+### Added
+
+* [Storageless] Allow a SessionInterface to be used as a PSR-15 middleware.
+* [CookieInterface] The Cookie class now implements a CookieInterface.
+
+### Changed
+
+* [SessionInstance] Use the new read_and_close option when starting the session.
+* Replaced protected methods/properties with private for safer encapsulation.
+* All classes now use type hints where possible.
+* [Support] Dropped support for PHP 5.6.
+* [Support] Dropped support for PHP 7.0.
+
+--------
+
 ## 1.4.0 - 2018-04-02
 
 ### Added
