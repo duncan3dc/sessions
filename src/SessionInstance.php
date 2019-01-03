@@ -83,19 +83,21 @@ class SessionInstance implements SessionInterface
         }
         $this->init = true;
 
-        session_cache_limiter(false);
+        if ( session_status() !== PHP_SESSION_ACTIVE ) {
+            session_cache_limiter(false);
 
-        session_set_cookie_params($this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
+            session_set_cookie_params($this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
 
-        session_name($this->name);
+            session_name($this->name);
 
-        if ($this->id !== "") {
-            session_id($this->id);
+            if ( $this->id !== "" ) {
+                session_id($this->id);
+            }
+
+            session_start([
+                "read_and_close" => true,
+            ]);
         }
-
-        session_start([
-            "read_and_close"    =>  true,
-        ]);
 
         /**
          * If the cookie has a specific lifetime (not unlimited)
