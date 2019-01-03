@@ -3,6 +3,7 @@
 namespace duncan3dc\SessionsTest;
 
 use duncan3dc\Sessions\Exceptions\InvalidNameException;
+use duncan3dc\Sessions\Exceptions\AlreadyActiveException;
 use duncan3dc\Sessions\SessionInstance;
 use PHPUnit\Framework\TestCase;
 use function session_set_save_handler;
@@ -17,6 +18,12 @@ class SessionInstanceTest extends TestCase
     {
         session_set_save_handler(new SessionHandler());
         $this->session = new SessionInstance("test");
+    }
+
+
+    public function tearDown(): void
+    {
+        $this->session->destroy();
     }
 
 
@@ -251,5 +258,14 @@ class SessionInstanceTest extends TestCase
 
         $this->assertSame("boom!", $this->session->getFlash("field"));
         $this->assertSame("value", $this->session->get("field"));
+    }
+
+
+    public function testInitOnStartedSessionThrowsException()
+    {
+        $this->expectException(AlreadyActiveException::class);
+        $this->expectExceptionMessage("A session has already been started");
+        session_start();
+        $this->session->getId();
     }
 }

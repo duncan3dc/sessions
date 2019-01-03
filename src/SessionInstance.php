@@ -2,6 +2,7 @@
 
 namespace duncan3dc\Sessions;
 
+use duncan3dc\Sessions\Exceptions\AlreadyActiveException;
 use duncan3dc\Sessions\Exceptions\InvalidNameException;
 use function array_key_exists;
 use function is_array;
@@ -76,6 +77,7 @@ class SessionInstance implements SessionInterface
      * Ensure the session data is loaded into cache.
      *
      * @return void
+     * @throws AlreadyActiveException
      */
     private function init()
     {
@@ -83,6 +85,10 @@ class SessionInstance implements SessionInterface
             return;
         }
         $this->init = true;
+
+        if (session_status() === \PHP_SESSION_ACTIVE) {
+            throw new AlreadyActiveException("A session has already been started");
+        }
 
         session_cache_limiter("");
 
@@ -119,6 +125,7 @@ class SessionInstance implements SessionInterface
      * Get the session ID.
      *
      * @return string
+     * @throws AlreadyActiveException
      */
     public function getId(): string
     {
@@ -132,6 +139,7 @@ class SessionInstance implements SessionInterface
      * Update the current session id with a newly generated one.
      *
      * @return string The new session ID
+     * @throws AlreadyActiveException
      */
     public function regenerate()
     {
@@ -170,6 +178,7 @@ class SessionInstance implements SessionInterface
      * @param string $key The name of the name to retrieve
      *
      * @return mixed
+     * @throws AlreadyActiveException
      */
     public function get(string $key)
     {
@@ -187,6 +196,7 @@ class SessionInstance implements SessionInterface
      * Get all the current session data.
      *
      * @return array
+     * @throws AlreadyActiveException
      */
     public function getAll(): array
     {
@@ -203,6 +213,7 @@ class SessionInstance implements SessionInterface
      * @param mixed $value If $data is a string then store this value in the session data
      *
      * @return SessionInterface
+     * @throws AlreadyActiveException
      */
     public function set($data, $value = null): SessionInterface
     {
@@ -258,7 +269,10 @@ class SessionInstance implements SessionInterface
      */
     public function destroy(): SessionInterface
     {
-        $this->init();
+        try {
+            $this->init();
+        } catch (AlreadyActiveException $exception) {
+        }
 
         # Start the session up, but ignore the error about headers already being sent
         @session_start();
