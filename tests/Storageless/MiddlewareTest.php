@@ -26,7 +26,7 @@ class MiddlewareTest extends TestCase
     }
 
 
-    public function testItWorks()
+    public function testItWorks(): void
     {
         $app = new MiddlewarePipe;
         $app->pipe($this->getSession());

@@ -9,12 +9,12 @@ use function session_set_cookie_params;
 class CookieTest extends TestCase
 {
 
-    public function testGetLifetime()
+    public function testGetLifetime(): void
     {
         $cookie = new Cookie;
         $this->assertSame(0, $cookie->getLifetime());
     }
-    public function testWithLifetime()
+    public function testWithLifetime(): void
     {
         $cookie = new Cookie;
         $this->assertSame(60, $cookie->withLifetime(60)->getLifetime());
@@ -23,12 +23,12 @@ class CookieTest extends TestCase
 
 
 
-    public function testGetPath()
+    public function testGetPath(): void
     {
         $cookie = new Cookie;
         $this->assertSame("/", $cookie->getPath());
     }
-    public function testWithPath()
+    public function testWithPath(): void
     {
         $cookie = new Cookie;
         $this->assertSame("/admin", $cookie->withPath("/admin")->getPath());
@@ -36,12 +36,12 @@ class CookieTest extends TestCase
     }
 
 
-    public function testGetDomain()
+    public function testGetDomain(): void
     {
         $cookie = new Cookie;
         $this->assertSame("", $cookie->getDomain());
     }
-    public function testWithDomain()
+    public function testWithDomain(): void
     {
         $cookie = new Cookie;
         $this->assertSame("example.com", $cookie->withDomain("example.com")->getDomain());
@@ -49,12 +49,12 @@ class CookieTest extends TestCase
     }
 
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $cookie = new Cookie;
         $this->assertSame(false, $cookie->isSecure());
     }
-    public function testWithSecure()
+    public function testWithSecure(): void
     {
         $cookie = new Cookie;
         $this->assertSame(true, $cookie->withSecure(true)->isSecure());
@@ -62,12 +62,12 @@ class CookieTest extends TestCase
     }
 
 
-    public function testIsHttpOnly()
+    public function testIsHttpOnly(): void
     {
         $cookie = new Cookie;
         $this->assertSame(false, $cookie->isHttpOnly());
     }
-    public function testWithHttpOnly()
+    public function testWithHttpOnly(): void
     {
         $cookie = new Cookie;
         $this->assertSame(true, $cookie->withHttpOnly(true)->isHttpOnly());
@@ -75,7 +75,7 @@ class CookieTest extends TestCase
     }
 
 
-    public function testCreateFromIni()
+    public function testCreateFromIni(): void
     {
         session_set_cookie_params(25, "/users", "example.com", false, true);
         $cookie = Cookie::createFromIni();

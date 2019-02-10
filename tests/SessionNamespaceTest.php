@@ -20,19 +20,19 @@ class SessionNamespaceTest extends TestCase
     private $session;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->session = Mockery::mock(SessionInterface::class);
         $this->namespace = new SessionNamespace("test", $this->session);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testSetInt()
+    public function testSetInt(): void
     {
         $this->session->shouldReceive("set")->once()->with("_ns_test_one", 1);
         $result = $this->namespace->set("one", 1);
@@ -40,7 +40,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testSetString()
+    public function testSetString(): void
     {
         $this->session->shouldReceive("set")->once()->with("_ns_test_one", "1");
         $result = $this->namespace->set("one", "1");
@@ -48,7 +48,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testSetFloat()
+    public function testSetFloat(): void
     {
         $this->session->shouldReceive("set")->once()->with("_ns_test_one", 1.0);
         $result = $this->namespace->set("one", 1.0);
@@ -56,7 +56,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testGetInt()
+    public function testGetInt(): void
     {
         $this->session->shouldReceive("get")->once()->with("_ns_test_one")->andReturn(1);
         $result = $this->namespace->get("one");
@@ -64,7 +64,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testGetString()
+    public function testGetString(): void
     {
         $this->session->shouldReceive("get")->once()->with("_ns_test_one")->andReturn("1");
         $result = $this->namespace->get("one");
@@ -72,7 +72,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testGetFloat()
+    public function testGetFloat(): void
     {
         $this->session->shouldReceive("get")->once()->with("_ns_test_one")->andReturn(1.0);
         $result = $this->namespace->get("one");
@@ -80,7 +80,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testUnset()
+    public function testUnset(): void
     {
         $this->session->shouldReceive("set")->once()->with(["_ns_test_one" => null], null);
         $result = $this->namespace->delete("one");
@@ -88,7 +88,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testUnsetArray()
+    public function testUnsetArray(): void
     {
         $this->session->shouldReceive("set")->once()->with(["_ns_test_one" => null, "_ns_test_three" => null], null);
         $result = $this->namespace->delete("one", "three");
@@ -96,7 +96,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->session->shouldReceive("getAll")->once()->with()->andReturn([
             "_ns_test_one"  =>  "one",
@@ -114,7 +114,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testCreateNamespace()
+    public function testCreateNamespace(): void
     {
         $extra = $this->namespace->createNamespace("extra");
 
@@ -125,7 +125,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testSetFlash()
+    public function testSetFlash(): void
     {
         $this->session->shouldReceive("set")->once()->with("_ns_test__fs_field", "boom!");
         $result = $this->namespace->setFlash("field", "boom!");
@@ -133,7 +133,7 @@ class SessionNamespaceTest extends TestCase
     }
 
 
-    public function testGetFlash()
+    public function testGetFlash(): void
     {
         $this->session->shouldReceive("get")->once()->with("_ns_test__fs_field")->andReturn("boom!");
         $this->session->shouldReceive("set")->once()->with(["_ns_test__fs_field" => null], null);

@@ -37,7 +37,7 @@ class WebTest extends TestCase
     private $client;
 
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         # Start the internal web server for cookie based tests
         exec("php -S localhost:" . self::SERVER_PORT . " -t " . __DIR__ . "/web >/dev/null 2>&1 & echo $!", $output, $status);
@@ -48,14 +48,14 @@ class WebTest extends TestCase
     }
 
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         # Ensure the internal web server is killed when the tests end
         exec("kill " . self::$pid);
     }
 
 
-    public function setUp()
+    public function setUp(): void
     {
         session_set_save_handler(new \SessionHandler);
 
@@ -68,7 +68,7 @@ class WebTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->client);
 
@@ -135,13 +135,13 @@ class WebTest extends TestCase
     }
 
 
-    public function testGetEmpty()
+    public function testGetEmpty(): void
     {
         $this->assertRequest("getall.php", []);
     }
 
 
-    public function testSetSomething()
+    public function testSetSomething(): void
     {
         $this->request("set.php?key=ok&value=yep");
         $this->assertRequest("getall.php", [
@@ -150,7 +150,7 @@ class WebTest extends TestCase
     }
 
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         $this->request("set.php?key=ok&value=yep");
         $this->assertRequest("getall.php", [
@@ -162,7 +162,7 @@ class WebTest extends TestCase
     }
 
 
-    public function testDestroyCorrectsession()
+    public function testDestroyCorrectSession(): void
     {
         $this->request("set.php?key=ok&value=web1", "web1");
         $this->assertRequest("getall.php?session_name=web1", [
@@ -183,7 +183,7 @@ class WebTest extends TestCase
     }
 
 
-    public function testDestroyCookie()
+    public function testDestroyCookie(): void
     {
         $this->request("destroy.php");
 
@@ -195,7 +195,7 @@ class WebTest extends TestCase
     }
 
 
-    public function testDestroyEmptiesSession()
+    public function testDestroyEmptiesSession(): void
     {
         $this->request("set.php?key=ok&value=yep");
         $this->assertRequest("getall.php", [
@@ -217,7 +217,7 @@ class WebTest extends TestCase
     }
 
 
-    public function testCookies()
+    public function testCookies(): void
     {
         $this->request("cookies.php");
 
@@ -230,34 +230,34 @@ class WebTest extends TestCase
         $this->assertEquals(false, $cookie->getSecure());
         $this->assertEquals(false, $cookie->getHttpOnly());
     }
-    public function testCookieLifetime()
+    public function testCookieLifetime(): void
     {
         $this->request("cookies.php?lifetime=33");
         $this->assertEquals(33, $this->getCookie()->getMaxAge());
     }
-    public function testCookiePath()
+    public function testCookiePath(): void
     {
         $this->request("cookies.php?path=/admin");
         $this->assertEquals("/admin", $this->getCookie()->getPath());
     }
-    public function testCookieDomain()
+    public function testCookieDomain(): void
     {
         $this->request("cookies.php?domain=example.com");
         $this->assertEquals("example.com", $this->getCookie()->getDomain());
     }
-    public function testCookieSecure()
+    public function testCookieSecure(): void
     {
         $this->request("cookies.php?secure=1");
         $this->assertEquals(true, $this->getCookie()->getSecure());
     }
-    public function testCookieHttpOnly()
+    public function testCookieHttpOnly(): void
     {
         $this->request("cookies.php?httponly=1");
         $this->assertEquals(true, $this->getCookie()->getHttpOnly());
     }
 
 
-    public function testSessionIDReuse()
+    public function testSessionIDReuse(): void
     {
         $response = $this->request("use-id.php?session_name=web-sockets&key=using&value=ID");
         $id = (string) $response->getBody();
@@ -268,7 +268,7 @@ class WebTest extends TestCase
     }
 
 
-    public function testRegenerate()
+    public function testRegenerate(): void
     {
         $this->request("set.php?key=under&value=oath");
         $this->assertRequest("getall.php", ["under" => "oath"]);
@@ -281,7 +281,7 @@ class WebTest extends TestCase
     }
 
 
-    public function testRefreshCookie()
+    public function testRefreshCookie(): void
     {
         $this->request("cookies.php?lifetime=4");
 
