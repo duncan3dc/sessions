@@ -2,7 +2,6 @@
 
 namespace duncan3dc\Sessions\Storageless;
 
-use duncan3dc\Sessions\CookieInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -20,9 +19,7 @@ final class Middleware implements MiddlewareInterface
     /**
      * Create a new instance.
      *
-     * @param string $name The name of the session
-     * @param CookieInterface $cookie The cookie settings to use
-     * @param string $id The session ID to use
+     * @param StoragelessMiddleware $middleware
      */
     public function __construct(StoragelessMiddleware $middleware)
     {

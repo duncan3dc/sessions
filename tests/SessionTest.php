@@ -6,15 +6,14 @@ use duncan3dc\Sessions\Session;
 use duncan3dc\Sessions\SessionInstance;
 use duncan3dc\Sessions\SessionInterface;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use function session_name;
 use function substr;
 
 class SessionTest extends TestCase
 {
-    /**
-     * @var Mockery $session A SessionInstance to use for testing.
-     */
+    /** @var SessionInterface&MockInterface */
     private $session;
 
 
@@ -23,7 +22,7 @@ class SessionTest extends TestCase
         $this->session = Mockery::mock(SessionInterface::class);
 
         # Don't use the mocked instance when we're testing getInstance()
-        if (substr($this->getName(), 0, 15) === "testGetInstance") {
+        if (substr((string) $this->getName(), 0, 15) === "testGetInstance") {
             return;
         }
 
@@ -56,6 +55,7 @@ class SessionTest extends TestCase
 
         # Ensure we get a session instance
         $this->assertInstanceOf(SessionInterface::class, $session);
+        $this->assertInstanceOf(SessionInstance::class, $session);
 
         # Ensure we get the same instance on subsequent calls
         $this->assertSame($session, Session::getInstance());
@@ -158,7 +158,10 @@ class SessionTest extends TestCase
 
     public function testDestroy(): void
     {
-        $this->session->shouldReceive("destroy")->once()->with();
+        $session = Mockery::mock(SessionInstance::class);
+        Session::setInstance($session);
+
+        $session->shouldReceive("destroy")->once()->with();
         $result = Session::destroy();
         $this->assertNull($result);
     }

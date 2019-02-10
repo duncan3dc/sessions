@@ -2,6 +2,7 @@
 
 namespace duncan3dc\Sessions;
 
+use function method_exists;
 use function strlen;
 
 /**
@@ -15,9 +16,9 @@ class Session
     private static $name = "";
 
     /**
-     * @var SessionInterface $session The underlying session instance.
+     * @var SessionInterface|null $session The underlying session instance.
      */
-    private static $session = null;
+    private static $session;
 
     /**
      * Set the name of the session to use.
@@ -142,7 +143,7 @@ class Session
     /**
      * Unset a value within session data.
      *
-     * @param string $keys The keys to delete from the session
+     * @param string ...$keys The keys to delete from the session
      *
      * @return void
      */
@@ -197,6 +198,9 @@ class Session
      */
     public static function destroy()
     {
-        static::getInstance()->destroy();
+        $session = static::getInstance();
+        if (method_exists($session, "destroy")) {
+            $session->destroy();
+        }
     }
 }

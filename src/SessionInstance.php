@@ -83,7 +83,7 @@ class SessionInstance implements SessionInterface
         }
         $this->init = true;
 
-        session_cache_limiter(false);
+        session_cache_limiter("");
 
         session_set_cookie_params($this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
 

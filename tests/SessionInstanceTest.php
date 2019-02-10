@@ -8,9 +8,7 @@ use function session_set_save_handler;
 
 class SessionInstanceTest extends TestCase
 {
-    /**
-     * @var SessionInstance $session The instance we are testing.
-     */
+    /** @var SessionInstance */
     private $session;
 
 

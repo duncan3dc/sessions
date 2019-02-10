@@ -26,14 +26,10 @@ class WebTest extends TestCase
     const SERVER_PORT = 15377;
     private static $pid;
 
-    /**
-     * @var CookieJarInterface $cookies The cookies from the latest response.
-     */
+    /** @var CookieJarInterface */
     private $cookies;
 
-    /**
-     * @var ClientInterface $client A HTTP client to use for testing.
-     */
+    /** @var ClientInterface */
     private $client;
 
 
@@ -60,8 +56,7 @@ class WebTest extends TestCase
         session_set_save_handler(new \SessionHandler());
 
         $path = tempnam(sys_get_temp_dir(), "duncan3dc-sessions-");
-        $this->cookies = new FileCookieJar($path);
-
+        $this->cookies = new FileCookieJar((string) $path);
         $this->client = new Client([
             "cookies" => $this->cookies,
         ]);
@@ -203,6 +198,7 @@ class WebTest extends TestCase
         ]);
 
         # Destroy the session but keep the cookie (malfunctioning client)
+        $sessionCookie = null;
         foreach ($this->cookies as $cookie) {
             if ($cookie->getName() === "web") {
                 $sessionCookie = $cookie;

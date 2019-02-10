@@ -1,6 +1,6 @@
 <?php
 
-namespace duncan3dc\SessionsTest;
+namespace duncan3dc\SessionsTest\Storageless;
 
 use duncan3dc\Sessions\SessionInterface;
 use duncan3dc\Sessions\Storageless\Middleware;

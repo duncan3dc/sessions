@@ -18,7 +18,6 @@ install:
 
 script:
   - vendor/bin/phpunit --stderr
-  - tests/lint.sh
   - vendor/bin/composer-require-checker
 
 jobs:
@@ -27,6 +26,11 @@ jobs:
     - stage: coding standards
       script:
         - vendor/bin/phpcs --standard=phpcs.xml src tests
+
+    - stage: code quality
+      script:
+        - vendor/bin/phpstan analyse --level=max src
+        - vendor/bin/phpstan analyse --level=max --configuration=phpstan-tests.neon tests
 
     - stage: coverage
       script:

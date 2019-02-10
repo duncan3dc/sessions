@@ -74,7 +74,7 @@ class Session implements SessionInterface
     /**
      * Unset a value within session data.
      *
-     * @param string[] $keys All the keys to remove from the session
+     * @param string ...$keys All the keys to remove from the session
      *
      * @return SessionInterface
      */

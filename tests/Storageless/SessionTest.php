@@ -4,20 +4,17 @@ namespace duncan3dc\SessionsTest\Storageless;
 
 use duncan3dc\Sessions\Storageless\Session;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use PSR7Sessions\Storageless\Session\DefaultSessionData;
 use PSR7Sessions\Storageless\Session\SessionInterface;
 
 class SessionTest extends TestCase
 {
-    /**
-     * @var Session $session The instance we are testing.
-     */
+    /** @var Session */
     private $session;
 
-    /**
-     * @var Mockery $storageless An instance to test using.
-     */
+    /** @var SessionInterface&MockInterface */
     private $storageless;
 
 

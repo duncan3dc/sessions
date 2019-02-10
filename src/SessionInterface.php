@@ -69,7 +69,7 @@ interface SessionInterface
     /**
      * Unset a value within session data.
      *
-     * @param string[] $keys The name of the keys to delete
+     * @param string ...$keys The name of the keys to delete
      *
      * @return SessionInterface
      */
