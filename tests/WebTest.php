@@ -57,7 +57,7 @@ class WebTest extends TestCase
 
     public function setUp(): void
     {
-        session_set_save_handler(new \SessionHandler);
+        session_set_save_handler(new \SessionHandler());
 
         $path = tempnam(sys_get_temp_dir(), "duncan3dc-sessions-");
         $this->cookies = new FileCookieJar($path);

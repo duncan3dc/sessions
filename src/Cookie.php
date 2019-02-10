@@ -39,7 +39,7 @@ class Cookie implements CookieInterface
     {
         $params = session_get_cookie_params();
 
-        return (new static)
+        return (new static())
             ->withLifetime($params["lifetime"])
             ->withPath($params["path"])
             ->withDomain($params["domain"])

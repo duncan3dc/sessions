@@ -96,6 +96,5 @@ class SessionTest extends TestCase
     {
         $this->storageless->shouldReceive("clear")->once()->with();
         $this->assertSame($this->session, $this->session->clear());
-
     }
 }

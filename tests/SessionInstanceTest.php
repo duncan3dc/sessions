@@ -16,7 +16,7 @@ class SessionInstanceTest extends TestCase
 
     public function setUp(): void
     {
-        session_set_save_handler(new SessionHandler);
+        session_set_save_handler(new SessionHandler());
         $this->session = new SessionInstance("test");
     }
 
@@ -79,7 +79,7 @@ class SessionInstanceTest extends TestCase
 
     public function testSerialize(): void
     {
-        $obj = new \stdClass;
+        $obj = new \stdClass();
         $obj->one = 1;
         $obj->two = 2;
 
