@@ -75,6 +75,7 @@ class SessionInstance implements SessionInterface
      * Ensure the session data is loaded into cache.
      *
      * @return void
+     * @throws SessionAlreadyActiveException    When init is called but a session has already been started
      */
     private function init()
     {
@@ -83,21 +84,27 @@ class SessionInstance implements SessionInterface
         }
         $this->init = true;
 
-        if ( session_status() !== PHP_SESSION_ACTIVE ) {
-            session_cache_limiter(false);
-
-            session_set_cookie_params($this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
-
-            session_name($this->name);
-
-            if ( $this->id !== "" ) {
-                session_id($this->id);
-            }
-
-            session_start([
-                "read_and_close" => true,
-            ]);
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            throw new SessionAlreadyActiveException(
+                "A session has already been started.",
+                500
+            );
         }
+
+        session_cache_limiter(false);
+
+        session_set_cookie_params($this->cookie->getLifetime(), $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
+
+        session_name($this->name);
+
+        if ( $this->id !== "" ) {
+            session_id($this->id);
+        }
+
+        session_start([
+            "read_and_close" => true,
+        ]);
+
 
         /**
          * If the cookie has a specific lifetime (not unlimited)
@@ -120,6 +127,7 @@ class SessionInstance implements SessionInterface
      * Get the session ID.
      *
      * @return string
+     * @throws SessionAlreadyActiveException
      */
     public function getId(): string
     {
@@ -133,6 +141,7 @@ class SessionInstance implements SessionInterface
      * Update the current session id with a newly generated one.
      *
      * @return string The new session ID
+     * @throws SessionAlreadyActiveException
      */
     public function regenerate()
     {
@@ -171,6 +180,7 @@ class SessionInstance implements SessionInterface
      * @param string $key The name of the name to retrieve
      *
      * @return mixed
+     * @throws SessionAlreadyActiveException
      */
     public function get(string $key)
     {
@@ -188,6 +198,7 @@ class SessionInstance implements SessionInterface
      * Get all the current session data.
      *
      * @return array
+     * @throws SessionAlreadyActiveException
      */
     public function getAll(): array
     {
@@ -200,10 +211,11 @@ class SessionInstance implements SessionInterface
     /**
      * Set a value within session data.
      *
-     * @param string|array $data Either the name of the session key to update, or an array of keys to update
-     * @param mixed $value If $data is a string then store this value in the session data
+     * @param string|array $data  Either the name of the session key to update, or an array of keys to update
+     * @param mixed        $value If $data is a string then store this value in the session data
      *
      * @return SessionInterface
+     * @throws SessionAlreadyActiveException
      */
     public function set($data, $value = null): SessionInterface
     {
@@ -259,7 +271,9 @@ class SessionInstance implements SessionInterface
      */
     public function destroy(): SessionInterface
     {
-        $this->init();
+        try {
+            $this->init();
+        } catch (SessionAlreadyActiveException $exception) {}
 
         # Start the session up, but ignore the error about headers already being sent
         @session_start();

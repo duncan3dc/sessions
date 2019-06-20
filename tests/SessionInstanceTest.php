@@ -2,6 +2,7 @@
 
 namespace duncan3dc\SessionsTest;
 
+use duncan3dc\Sessions\SessionAlreadyActiveException;
 use duncan3dc\Sessions\SessionInstance;
 use PHPUnit\Framework\TestCase;
 use function session_set_save_handler;
@@ -20,6 +21,10 @@ class SessionInstanceTest extends TestCase
         $this->session = new SessionInstance("test");
     }
 
+    public function tearDown()
+    {
+        $this->session->destroy();
+    }
 
     public function testConstructor()
     {
@@ -28,7 +33,9 @@ class SessionInstanceTest extends TestCase
         new SessionInstance("");
     }
 
-
+    /**
+     * @throws SessionAlreadyActiveException
+     */
     public function testGetAll()
     {
         $this->session->set("one", 1);
@@ -252,5 +259,14 @@ class SessionInstanceTest extends TestCase
 
         $this->assertSame("boom!", $this->session->getFlash("field"));
         $this->assertSame("value", $this->session->get("field"));
+    }
+
+    public function testInitOnStartedSessionThrowsException()
+    {
+        $this->expectException(SessionAlreadyActiveException::class);
+        $this->expectExceptionMessage("A session has already been started.");
+        $this->expectExceptionCode(500);
+        session_start();
+        $this->session->getId();
     }
 }
