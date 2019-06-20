@@ -9,15 +9,13 @@ use function session_set_save_handler;
 
 class SessionInstanceTest extends TestCase
 {
-    /**
-     * @var SessionInstance $session The instance we are testing.
-     */
+    /** @var SessionInstance */
     private $session;
 
 
-    public function setUp()
+    public function setUp(): void
     {
-        session_set_save_handler(new SessionHandler);
+        session_set_save_handler(new SessionHandler());
         $this->session = new SessionInstance("test");
     }
 
@@ -26,7 +24,7 @@ class SessionInstanceTest extends TestCase
         $this->session->destroy();
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Cannot start session, no name has been specified");
@@ -36,7 +34,7 @@ class SessionInstanceTest extends TestCase
     /**
      * @throws SessionAlreadyActiveException
      */
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $this->session->set("one", 1);
         $this->session->set([
@@ -52,7 +50,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testInt()
+    public function testInt(): void
     {
         $result = $this->session->set("one", 1);
         $this->assertSame($this->session, $result);
@@ -60,7 +58,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testString()
+    public function testString(): void
     {
         $result = $this->session->set("one", "1");
         $this->assertSame($this->session, $result);
@@ -68,7 +66,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testFloat()
+    public function testFloat(): void
     {
         $result = $this->session->set("one", 1.0);
         $this->assertSame($this->session, $result);
@@ -76,7 +74,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testRegenerate()
+    public function testRegenerate(): void
     {
         $originalId = session_id();
         $result = $this->session->regenerate();
@@ -84,9 +82,9 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testSerialize()
+    public function testSerialize(): void
     {
-        $obj = new \stdClass;
+        $obj = new \stdClass();
         $obj->one = 1;
         $obj->two = 2;
 
@@ -95,7 +93,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testSetTwice()
+    public function testSetTwice(): void
     {
         $result = $this->session->set("one", "ok");
         $this->assertSame($this->session, $result);
@@ -104,7 +102,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testGetSet1()
+    public function testGetSet1(): void
     {
         $_POST["field1"] = "post";
         $_GET["field1"] = "get";
@@ -112,7 +110,7 @@ class SessionInstanceTest extends TestCase
 
         $this->assertSame("post", $this->session->getSet("field1"));
     }
-    public function testGetSet2()
+    public function testGetSet2(): void
     {
         $_POST["field2"] = "post";
         $_GET["field2"] = "get";
@@ -120,43 +118,43 @@ class SessionInstanceTest extends TestCase
 
         $this->assertSame("post", $this->session->getSet("field2", "default", true));
     }
-    public function testGetSet3()
+    public function testGetSet3(): void
     {
         $_GET["field3"] = "get";
         $this->session->set("fiel3", "existing");
 
         $this->assertSame("get", $this->session->getSet("field3"));
     }
-    public function testGetSet4()
+    public function testGetSet4(): void
     {
         $_GET["field4"] = "get";
         $this->session->set("field4", "existing");
 
         $this->assertSame("get", $this->session->getSet("field4", "default", true));
     }
-    public function testGetSet5()
+    public function testGetSet5(): void
     {
         $this->session->set("field5", "existing");
 
         $this->assertSame("existing", $this->session->getSet("field5"));
     }
-    public function testGetSet6()
+    public function testGetSet6(): void
     {
         $this->session->set("field6", "existing");
 
         $this->assertSame("existing", $this->session->getSet("field6", "default", true));
     }
-    public function testGetSet7()
+    public function testGetSet7(): void
     {
         $this->assertSame(null, $this->session->getSet("field7"));
     }
-    public function testGetSet8()
+    public function testGetSet8(): void
     {
         $this->assertSame("default", $this->session->getSet("field8", "default", true));
     }
 
 
-    public function testUnset()
+    public function testUnset(): void
     {
         $this->session->set("one", 1);
         $this->assertSame(1, $this->session->get("one"));
@@ -165,7 +163,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testUnsetArray()
+    public function testUnsetArray(): void
     {
         $this->session->set([
             "one"   =>  1,
@@ -184,7 +182,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->session->set([
             "one"   =>  1,
@@ -203,7 +201,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         $this->session->set("album", "kezia");
         $this->assertSame("kezia", $this->session->get("album"));
@@ -214,7 +212,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testCreateNamespace()
+    public function testCreateNamespace(): void
     {
         $extra = $this->session->createNamespace("extra");
 
@@ -224,7 +222,7 @@ class SessionInstanceTest extends TestCase
         $this->assertNull($this->session->get("one"));
         $this->assertSame(1, $extra->get("one"));
     }
-    public function testCreateNamespaceClash()
+    public function testCreateNamespaceClash(): void
     {
         $one = $this->session->createNamespace("one");
         $two = $one->createNamespace("two");
@@ -246,13 +244,13 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testFlash()
+    public function testFlash(): void
     {
         $this->session->setFlash("field", "boom!");
         $this->assertSame("boom!", $this->session->getFlash("field"));
         $this->assertSame(null, $this->session->getFlash("field"));
     }
-    public function testFlashClash()
+    public function testFlashClash(): void
     {
         $this->session->setFlash("field", "boom!");
         $this->session->set("field", "value");

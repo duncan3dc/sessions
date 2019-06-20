@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		- '/Access to an undefined property duncan3dc\\ObjectIntruder\\Intruder::/'
+		- '/^Result of static method duncan3dc\\Sessions\\Session::.*\(\) \(void\) is used.$/'
+		- '/^Call to method PHPUnit\\Framework\\Assert::assertNull\(\) with void will always evaluate to false\.$/'
+	excludes_analyse:
+		- %rootDir%/../../../tests/web*
+
+includes:
+	- vendor/phpstan/phpstan-mockery/extension.neon
+	- vendor/phpstan/phpstan-phpunit/extension.neon

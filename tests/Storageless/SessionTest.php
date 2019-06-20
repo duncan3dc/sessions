@@ -4,37 +4,34 @@ namespace duncan3dc\SessionsTest\Storageless;
 
 use duncan3dc\Sessions\Storageless\Session;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use PSR7Sessions\Storageless\Session\DefaultSessionData;
 use PSR7Sessions\Storageless\Session\SessionInterface;
 
 class SessionTest extends TestCase
 {
-    /**
-     * @var Session $session The instance we are testing.
-     */
+    /** @var Session */
     private $session;
 
-    /**
-     * @var Mockery $storageless An instance to test using.
-     */
+    /** @var SessionInterface&MockInterface */
     private $storageless;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->storageless = Mockery::mock(SessionInterface::class);
         $this->session = new Session($this->storageless);
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testCreateNamespace()
+    public function testCreateNamespace(): void
     {
         $this->storageless->shouldReceive("set")->once()->with("_ns_inner_key", "value");
 
@@ -46,14 +43,14 @@ class SessionTest extends TestCase
     }
 
 
-    public function testGet()
+    public function testGet(): void
     {
         $this->storageless->shouldReceive("get")->once()->with("key")->andReturn("value");
         $this->assertSame("value", $this->session->get("key"));
     }
 
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $storageless = DefaultSessionData::newEmptySession();
         $storageless->set("one", 1);
@@ -67,12 +64,12 @@ class SessionTest extends TestCase
     }
 
 
-    public function testSet1()
+    public function testSet1(): void
     {
         $this->storageless->shouldReceive("set")->once()->with("key", "value");
         $this->assertSame($this->session, $this->session->set("key", "value"));
     }
-    public function testSet2()
+    public function testSet2(): void
     {
         $this->storageless->shouldReceive("set")->once()->with("key1", "value1");
         $this->storageless->shouldReceive("set")->once()->with("key2", "value2");
@@ -84,7 +81,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->storageless->shouldReceive("remove")->once()->with("key1");
         $this->storageless->shouldReceive("remove")->once()->with("key2");
@@ -92,10 +89,9 @@ class SessionTest extends TestCase
     }
 
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->storageless->shouldReceive("clear")->once()->with();
         $this->assertSame($this->session, $this->session->clear());
-
     }
 }

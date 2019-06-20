@@ -6,24 +6,23 @@ use duncan3dc\Sessions\Session;
 use duncan3dc\Sessions\SessionInstance;
 use duncan3dc\Sessions\SessionInterface;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use function session_name;
 use function substr;
 
 class SessionTest extends TestCase
 {
-    /**
-     * @var Mockery $session A SessionInstance to use for testing.
-     */
+    /** @var SessionInterface&MockInterface */
     private $session;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->session = Mockery::mock(SessionInterface::class);
 
         # Don't use the mocked instance when we're testing getInstance()
-        if (substr($this->getName(), 0, 15) === "testGetInstance") {
+        if (substr((string) $this->getName(), 0, 15) === "testGetInstance") {
             return;
         }
 
@@ -31,13 +30,13 @@ class SessionTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testSetInstance()
+    public function testSetInstance(): void
     {
         $session = Mockery::mock(SessionInstance::class);
         Session::setInstance($session);
@@ -49,13 +48,14 @@ class SessionTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testGetInstance1()
+    public function testGetInstance1(): void
     {
         Session::name("specific-name-234rf387h");
         $session = Session::getInstance();
 
         # Ensure we get a session instance
         $this->assertInstanceOf(SessionInterface::class, $session);
+        $this->assertInstanceOf(SessionInstance::class, $session);
 
         # Ensure we get the same instance on subsequent calls
         $this->assertSame($session, Session::getInstance());
@@ -68,7 +68,7 @@ class SessionTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testGetInstance2()
+    public function testGetInstance2(): void
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage("Cannot start session, no name has been specified, you must call Session::name() before using this class");
@@ -76,7 +76,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testSetInt()
+    public function testSetInt(): void
     {
         $this->session->shouldReceive("set")->once()->with("one", 1);
         $result = Session::set("one", 1);
@@ -84,7 +84,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testSetString()
+    public function testSetString(): void
     {
         $this->session->shouldReceive("set")->once()->with("one", "1");
         $result = Session::set("one", "1");
@@ -92,7 +92,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testSetFloat()
+    public function testSetFloat(): void
     {
         $this->session->shouldReceive("set")->once()->with("one", 1.0);
         $result = Session::set("one", 1.0);
@@ -100,7 +100,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testGetInt()
+    public function testGetInt(): void
     {
         $this->session->shouldReceive("get")->once()->with("one")->andReturn(1);
         $result = Session::get("one");
@@ -108,7 +108,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testGetString()
+    public function testGetString(): void
     {
         $this->session->shouldReceive("get")->once()->with("one")->andReturn("1");
         $result = Session::get("one");
@@ -116,7 +116,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testGetFloat()
+    public function testGetFloat(): void
     {
         $this->session->shouldReceive("get")->once()->with("one")->andReturn(1.0);
         $result = Session::get("one");
@@ -124,7 +124,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $this->session->shouldReceive("getAll")->once()->with()->andReturn([]);
         $result = Session::getAll();
@@ -132,7 +132,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testUnset()
+    public function testUnset(): void
     {
         $this->session->shouldReceive("delete")->once()->with("one");
         $result = Session::delete("one");
@@ -140,7 +140,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testUnsetArray()
+    public function testUnsetArray(): void
     {
         $this->session->shouldReceive("delete")->once()->with("one", "three");
         $result = Session::delete("one", "three");
@@ -148,7 +148,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->session->shouldReceive("clear")->once()->with();
         $result = Session::clear();
@@ -156,27 +156,30 @@ class SessionTest extends TestCase
     }
 
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
-        $this->session->shouldReceive("destroy")->once()->with();
+        $session = Mockery::mock(SessionInstance::class);
+        Session::setInstance($session);
+
+        $session->shouldReceive("destroy")->once()->with();
         $result = Session::destroy();
         $this->assertNull($result);
     }
 
 
-    public function testGetSet1()
+    public function testGetSet1(): void
     {
         $this->session->shouldReceive("getSet")->once()->with("field", "default", false)->andReturn("ok");
         $result = Session::getSet("field", "default");
         $this->assertSame("ok", $result);
     }
-    public function testGetSet2()
+    public function testGetSet2(): void
     {
         $this->session->shouldReceive("getSet")->once()->with("field", null, false)->andReturn(7.0);
         $result = Session::getSet("field");
         $this->assertSame(7.0, $result);
     }
-    public function testGetSet3()
+    public function testGetSet3(): void
     {
         $this->session->shouldReceive("getSet")->once()->with("field", "default", true)->andReturn("3");
         $result = Session::getSet("field", "default", true);
@@ -184,7 +187,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testCreateNamespace()
+    public function testCreateNamespace(): void
     {
         $namespace = Mockery::mock(SessionInterface::class);
         $this->session->shouldReceive("createNamespace")->once()->with("extra")->andReturn($namespace);
@@ -193,7 +196,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testSetFlash()
+    public function testSetFlash(): void
     {
         $this->session->shouldReceive("setFlash")->once()->with("field", "boom!");
         $result = Session::setFlash("field", "boom!");
@@ -201,7 +204,7 @@ class SessionTest extends TestCase
     }
 
 
-    public function testGetFlash()
+    public function testGetFlash(): void
     {
         $this->session->shouldReceive("getFlash")->once()->with("field")->andReturn("boom!");
         $result = Session::getFlash("field");

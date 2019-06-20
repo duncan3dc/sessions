@@ -5,7 +5,7 @@ use duncan3dc\Sessions\Cookie;
 
 require __DIR__ . "/../../vendor/autoload.php";
 
-$cookie = new Cookie;
+$cookie = new Cookie();
 
 if (isset($_GET["lifetime"])) {
     $cookie = $cookie->withLifetime($_GET["lifetime"]);

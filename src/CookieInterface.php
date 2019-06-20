@@ -53,7 +53,7 @@ interface CookieInterface
     /**
      * Get the current domain.
      *
-     * @param string
+     * @return string
      */
     public function getDomain(): string;
 

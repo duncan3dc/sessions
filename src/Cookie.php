@@ -39,7 +39,7 @@ class Cookie implements CookieInterface
     {
         $params = session_get_cookie_params();
 
-        return (new static)
+        return (new static())
             ->withLifetime($params["lifetime"])
             ->withPath($params["path"])
             ->withDomain($params["domain"])
@@ -49,11 +49,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Create a new instance with the specified lifetime.
-     *
-     * @param int $lifetime The lifetime of the session cookie in seconds.
-     *
-     * @return CookieInterface
+     * @inheritdoc
      */
     public function withLifetime(int $lifetime): CookieInterface
     {
@@ -64,9 +60,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Get the current lifetime in seconds.
-     *
-     * @return int The lifetime of the session cookie in seconds.
+     * @inheritdoc
      */
     public function getLifetime(): int
     {
@@ -75,11 +69,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Create a new instance with the path.
-     *
-     * @param string $path Path on the domain where the cookie will work.
-     *
-     * @return CookieInterface
+     * @inheritdoc
      */
     public function withPath(string $path): CookieInterface
     {
@@ -90,9 +80,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Get the current path.
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getPath(): string
     {
@@ -101,11 +89,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Create a new instance with the domain.
-     *
-     * @param string $domain The domain the cookie should be sent to.
-     *
-     * @return CookieInterface
+     * @inheritdoc
      */
     public function withDomain(string $domain): CookieInterface
     {
@@ -116,9 +100,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Get the current domain.
-     *
-     * @param string
+     * @inheritdoc
      */
     public function getDomain(): string
     {
@@ -127,11 +109,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Create a new instance with the secure flag.
-     *
-     * @param bool $secure Only send over secure connections.
-     *
-     * @return CookieInterface
+     * @inheritdoc
      */
     public function withSecure(bool $secure): CookieInterface
     {
@@ -142,9 +120,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Check if this cookie is secure or not.
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isSecure(): bool
     {
@@ -153,11 +129,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Create a new instance with the HTTP only flag.
-     *
-     * @param bool $httponly Use the HTTP only flag.
-     *
-     * @return CookieInterface
+     * @inheritdoc
      */
     public function withHttpOnly(bool $httponly): CookieInterface
     {
@@ -168,9 +140,7 @@ class Cookie implements CookieInterface
 
 
     /**
-     * Check if this cookie is HTTP only or not.
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isHttpOnly(): bool
     {

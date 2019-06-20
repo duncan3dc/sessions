@@ -1,5 +1,5 @@
 <phpunit bootstrap="tests/bootstrap.php" stderr="true">
-    <testsuite>
+    <testsuite name="tests">
         <directory suffix="Test.php">tests</directory>
     </testsuite>
     <filter>
