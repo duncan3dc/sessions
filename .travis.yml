@@ -1,12 +1,14 @@
 language: php
 
 php:
-  - 7.1
   - 7.2
+  - 7.3
+  - 7.4snapshot
   - nightly
 
 matrix:
   allow_failures:
+  - php: 7.4snapshot
   - php: nightly
 
 env:
@@ -14,23 +16,30 @@ env:
   - COMPOSER_OPTS="--prefer-lowest"
 
 install:
-  - composer self-update --snapshot
   - composer update $COMPOSER_OPTS
 
 script:
-  - vendor/bin/phpunit --stderr --coverage-clover=clover.xml
-  - tests/lint.sh
+  - vendor/bin/phpunit --stderr
   - vendor/bin/composer-require-checker
 
 jobs:
   include:
+
+    - stage: coding standards
+      script:
+        - vendor/bin/phpcs --standard=phpcs.xml src tests
+
+    - stage: code quality
+      script:
+        - vendor/bin/phpstan analyse --level=max src
+        - vendor/bin/phpstan analyse --level=max --configuration=phpstan-tests.neon tests
+
     - stage: coverage
       script:
-        - vendor/bin/phpunit --coverage-clover=clover.xml
-        - vendor/bin/php-coveralls
+        - vendor/bin/phpunit --coverage-clover=coverage.xml
+        - bash <(curl -s https://codecov.io/bash)
 
 git:
   depth: 5
 
-dist: trusty
-sudo: false
+group: travis_latest

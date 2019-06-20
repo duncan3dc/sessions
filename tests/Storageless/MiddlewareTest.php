@@ -1,6 +1,6 @@
 <?php
 
-namespace duncan3dc\SessionsTest;
+namespace duncan3dc\SessionsTest\Storageless;
 
 use duncan3dc\Sessions\SessionInterface;
 use duncan3dc\Sessions\Storageless\Middleware;
@@ -26,16 +26,16 @@ class MiddlewareTest extends TestCase
     }
 
 
-    public function testItWorks()
+    public function testItWorks(): void
     {
-        $app = new MiddlewarePipe;
+        $app = new MiddlewarePipe();
         $app->pipe($this->getSession());
 
         $app->pipe(middleware(function (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
             $session = $request->getAttribute(SessionInterface::class);
             $this->assertInstanceOf(SessionInterface::class, $session);
 
-            $response = new Response;
+            $response = new Response();
             $response->getBody()->write(get_class($session));
             return $response;
         }));
