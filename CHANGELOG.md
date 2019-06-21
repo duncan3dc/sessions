@@ -4,6 +4,23 @@
 
 --------
 
+## 2.0.1 - 2019-06-21
+
+### Added
+
+* [Exceptions] Extend base exceptions with library exceptions.
+
+### Fixed
+
+* [Session] Do not attempt to start a session if one's already active.
+
+### Changed
+
+* [Support] Added support for PHP 7.3.
+* [Support] Dropped support for PHP 7.1.
+
+--------
+
 ## 2.0.0 - 2018-04-15
 
 ### Added
