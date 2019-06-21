@@ -2,6 +2,7 @@
 
 namespace duncan3dc\SessionsTest;
 
+use duncan3dc\Sessions\Exceptions\InvalidNameException;
 use duncan3dc\Sessions\Session;
 use duncan3dc\Sessions\SessionInstance;
 use duncan3dc\Sessions\SessionInterface;
@@ -70,7 +71,7 @@ class SessionTest extends TestCase
      */
     public function testGetInstance2(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(InvalidNameException::class);
         $this->expectExceptionMessage("Cannot start session, no name has been specified, you must call Session::name() before using this class");
         Session::getInstance();
     }

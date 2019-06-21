@@ -2,6 +2,7 @@
 
 namespace duncan3dc\Sessions;
 
+use duncan3dc\Sessions\Exceptions\InvalidNameException;
 use function array_key_exists;
 use function is_array;
 use function session_cache_limiter;
@@ -58,7 +59,7 @@ class SessionInstance implements SessionInterface
     public function __construct(string $name, CookieInterface $cookie = null, string $id = "")
     {
         if (strlen($name) < 1) {
-            throw new \InvalidArgumentException("Cannot start session, no name has been specified");
+            throw new InvalidNameException("Cannot start session, no name has been specified");
         }
 
         if ($cookie === null) {

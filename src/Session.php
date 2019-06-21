@@ -2,6 +2,7 @@
 
 namespace duncan3dc\Sessions;
 
+use duncan3dc\Sessions\Exceptions\InvalidNameException;
 use function method_exists;
 use function strlen;
 
@@ -59,7 +60,7 @@ class Session
         }
 
         if (strlen(static::$name) < 1) {
-            throw new \Exception("Cannot start session, no name has been specified, you must call Session::name() before using this class");
+            throw new InvalidNameException("Cannot start session, no name has been specified, you must call Session::name() before using this class");
         }
 
         static::$session = new SessionInstance(static::$name);
