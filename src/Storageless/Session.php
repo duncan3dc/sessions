@@ -6,6 +6,7 @@ use duncan3dc\Sessions\SessionInterface;
 use duncan3dc\Sessions\SessionNamespace;
 use duncan3dc\Sessions\SessionTrait;
 use PSR7Sessions\Storageless\Session\SessionInterface as StoragelessInterface;
+
 use function is_array;
 
 class Session implements SessionInterface

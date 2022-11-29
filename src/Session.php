@@ -3,6 +3,7 @@
 namespace duncan3dc\Sessions;
 
 use duncan3dc\Sessions\Exceptions\InvalidNameException;
+
 use function method_exists;
 use function strlen;
 

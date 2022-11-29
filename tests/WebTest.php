@@ -11,6 +11,7 @@ use GuzzleHttp\Cookie\FileCookieJar;
 use GuzzleHttp\Cookie\SetCookie;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+
 use function exec;
 use function session_set_save_handler;
 use function sleep;
@@ -23,7 +24,7 @@ use function unserialize;
 
 class WebTest extends TestCase
 {
-    const SERVER_PORT = 15377;
+    private const SERVER_PORT = 15377;
     private static $pid;
 
     /** @var CookieJarInterface */

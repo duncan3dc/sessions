@@ -7,8 +7,6 @@ namespace duncan3dc\Sessions;
  */
 interface SessionInterface
 {
-
-
     /**
      * Create a new namespaced section of this session to avoid clashes.
      *

@@ -6,6 +6,7 @@ use duncan3dc\Sessions\Exceptions\InvalidNameException;
 use duncan3dc\Sessions\Exceptions\AlreadyActiveException;
 use duncan3dc\Sessions\SessionInstance;
 use PHPUnit\Framework\TestCase;
+
 use function session_set_save_handler;
 
 class SessionInstanceTest extends TestCase

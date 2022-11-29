@@ -9,6 +9,7 @@ use duncan3dc\Sessions\SessionInterface;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
+
 use function session_name;
 use function substr;
 

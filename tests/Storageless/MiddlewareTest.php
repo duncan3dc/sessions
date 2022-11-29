@@ -19,7 +19,6 @@ use function Laminas\Stratigility\middleware;
 
 class MiddlewareTest extends TestCase
 {
-
     private function getSession()
     {
         $middleware = SessionMiddleware::fromSymmetricKeyDefaults(InMemory::plainText("mBC5v1sOKVvbdEitdSBenu59nfNfhwkedkJVNabosTw="), 60);

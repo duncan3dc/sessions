@@ -9,7 +9,6 @@ use function array_map;
  */
 trait SessionTrait
 {
-
     /**
      * This is a convenience method to prevent having to do several checks/set for all persistent variables.
      *

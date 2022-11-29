@@ -4,6 +4,7 @@ namespace duncan3dc\Sessions;
 
 use duncan3dc\Sessions\Exceptions\AlreadyActiveException;
 use duncan3dc\Sessions\Exceptions\InvalidNameException;
+
 use function array_key_exists;
 use function is_array;
 use function session_cache_limiter;
