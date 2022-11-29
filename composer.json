@@ -18,15 +18,15 @@
         "psr7-sessions/storageless": "^8.0",
         "ext-mbstring": "*",
         "ext-session": "*",
-        "php": "^7.4"
+        "php": "^7.4 || ^8.0"
     },
     "require-dev": {
-        "duncan3dc/object-intruder": "^0.3.0",
+        "duncan3dc/object-intruder": "^0.3 || ^1.0",
         "guzzlehttp/guzzle": "6.4.*",
         "laminas/laminas-stratigility": "^3.0",
         "lcobucci/jwt": "^4.0",
-        "maglnet/composer-require-checker": "^1.0",
-        "mockery/mockery": "^1.0",
+        "maglnet/composer-require-checker": "^3.0",
+        "mockery/mockery": "^1.5",
         "phpstan/phpstan": "^0.12.100",
         "phpstan/phpstan-mockery": "^0.12.14",
         "phpstan/phpstan-phpunit": "^0.12.22",
