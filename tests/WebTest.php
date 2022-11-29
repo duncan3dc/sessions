@@ -25,9 +25,11 @@ use function unserialize;
 class WebTest extends TestCase
 {
     private const SERVER_PORT = 15377;
+
+    /** @var int */
     private static $pid;
 
-    /** @var CookieJarInterface */
+    /** @var CookieJarInterface<SetCookie> */
     private $cookies;
 
     /** @var ClientInterface */
@@ -87,6 +89,8 @@ class WebTest extends TestCase
                 return $cookie;
             }
         }
+
+        throw new \Exception('Unable to find the cookie');
     }
 
 
@@ -117,7 +121,7 @@ class WebTest extends TestCase
      * Send a request to the testing backend and compare the response.
      *
      * @param string $path The path to send the request to
-     * @param array $expected The expected response data
+     * @param array<string, string> $expected The expected response data
      *
      * @return void
      */
@@ -206,6 +210,7 @@ class WebTest extends TestCase
                 break;
             }
         }
+        self::assertInstanceOf(SetCookie::class, $sessionCookie);
 
         $this->request("destroy.php");
         $this->cookies->setCookie($sessionCookie);

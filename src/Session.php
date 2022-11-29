@@ -99,7 +99,7 @@ class Session
     /**
      * Get all the current session data.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public static function getAll(): array
     {
@@ -110,7 +110,7 @@ class Session
     /**
      * Set a value within session data.
      *
-     * @param string|array $data Either the name of the session key to update, or an array of keys to update
+     * @param string|array<string, mixed> $data Either the name of the session key to update, or an array of keys to update
      * @param mixed $value If $data is a string then store this value in the session data
      *
      * @return void

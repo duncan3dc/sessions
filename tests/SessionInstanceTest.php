@@ -262,7 +262,7 @@ class SessionInstanceTest extends TestCase
     }
 
 
-    public function testInitOnStartedSessionThrowsException()
+    public function testInitOnStartedSessionThrowsException(): void
     {
         $this->expectException(AlreadyActiveException::class);
         $this->expectExceptionMessage("A session has already been started");

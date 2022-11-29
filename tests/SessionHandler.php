@@ -4,6 +4,7 @@ namespace duncan3dc\SessionsTest;
 
 class SessionHandler implements \SessionHandlerInterface
 {
+    /** @var string */
     private $data = "";
 
     public function close()

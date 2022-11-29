@@ -36,7 +36,7 @@ class SessionInstance implements SessionInterface
     private $name = "";
 
     /**
-     * @var array $data The cache of the session data.
+     * @var array<string, mixed> $data The cache of the session data.
      */
     private $data = [];
 
@@ -111,14 +111,14 @@ class SessionInstance implements SessionInterface
          */
         if ($this->cookie->getLifetime() > 0) {
             $expires = time() + $this->cookie->getLifetime();
-            setcookie($this->name, session_id(), $expires, $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
+            setcookie($this->name, (string) session_id(), $expires, $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
         }
 
         # Grab the sessions data to respond to get()
         $this->data = $_SESSION;
 
         # Grab session ID
-        $this->id = session_id();
+        $this->id = (string) session_id();
     }
 
 
@@ -151,7 +151,7 @@ class SessionInstance implements SessionInterface
         session_regenerate_id();
 
         # Get the newly generated ID
-        $this->id = session_id();
+        $this->id = (string) session_id();
 
         # Remove the lock from the session file
         session_write_close();
@@ -196,7 +196,6 @@ class SessionInstance implements SessionInterface
     /**
      * Get all the current session data.
      *
-     * @return array
      * @throws AlreadyActiveException
      */
     public function getAll(): array
@@ -210,10 +209,6 @@ class SessionInstance implements SessionInterface
     /**
      * Set a value within session data.
      *
-     * @param string|array $data Either the name of the session key to update, or an array of keys to update
-     * @param mixed $value If $data is a string then store this value in the session data
-     *
-     * @return SessionInterface
      * @throws AlreadyActiveException
      */
     public function set($data, $value = null): SessionInterface

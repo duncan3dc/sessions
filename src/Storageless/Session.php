@@ -19,45 +19,30 @@ class Session implements SessionInterface
     private $session;
 
 
-    /**
-     * @inheritDoc
-     */
     public function __construct(StoragelessInterface $session)
     {
         $this->session = $session;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function createNamespace(string $name): SessionInterface
     {
         return new SessionNamespace($name, $this);
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function get(string $key)
     {
         return $this->session->get($key);
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getAll(): array
     {
         return (array) $this->session->jsonSerialize();
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function set($data, $value = null): SessionInterface
     {
         if (is_array($data)) {
@@ -89,9 +74,6 @@ class Session implements SessionInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function clear(): SessionInterface
     {
         $this->session->clear();
