@@ -7,12 +7,14 @@ use duncan3dc\Sessions\Storageless\Middleware;
 use duncan3dc\Sessions\Storageless\Session;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
+use Lcobucci\JWT\Signer\Key\InMemory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use PSR7Sessions\Storageless\Http\SessionMiddleware;
 use Zend\Stratigility\MiddlewarePipe;
+
 use function Zend\Stratigility\middleware;
 
 class MiddlewareTest extends TestCase
@@ -20,7 +22,7 @@ class MiddlewareTest extends TestCase
 
     private function getSession()
     {
-        $middleware = SessionMiddleware::fromSymmetricKeyDefaults("mBC5v1sOKVvbdEitdSBenu59nfNfhwkedkJVNabosTw=", 60);
+        $middleware = SessionMiddleware::fromSymmetricKeyDefaults(InMemory::plainText("mBC5v1sOKVvbdEitdSBenu59nfNfhwkedkJVNabosTw="), 60);
 
         return new Middleware($middleware);
     }

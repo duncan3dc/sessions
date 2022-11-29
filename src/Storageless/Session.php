@@ -50,7 +50,7 @@ class Session implements SessionInterface
      */
     public function getAll(): array
     {
-        return $this->session->jsonSerialize();
+        return (array) $this->session->jsonSerialize();
     }
 
 
