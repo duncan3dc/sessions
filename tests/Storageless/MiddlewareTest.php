@@ -7,15 +7,15 @@ use duncan3dc\Sessions\Storageless\Middleware;
 use duncan3dc\Sessions\Storageless\Session;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
+use Laminas\Stratigility\MiddlewarePipe;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use PSR7Sessions\Storageless\Http\SessionMiddleware;
-use Zend\Stratigility\MiddlewarePipe;
 
-use function Zend\Stratigility\middleware;
+use function Laminas\Stratigility\middleware;
 
 class MiddlewareTest extends TestCase
 {
