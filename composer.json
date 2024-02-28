@@ -15,7 +15,7 @@
         "psr/http-message": "^1.0",
         "psr/http-server-handler": "^1.0",
         "psr/http-server-middleware": "^1.0",
-        "psr7-sessions/storageless": "^8.0",
+        "psr7-sessions/storageless": "^8.0 || ^9.0",
         "ext-mbstring": "*",
         "ext-session": "*",
         "php": "^7.4 || ^8.0"
