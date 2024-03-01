@@ -9,7 +9,7 @@ use function strlen;
 /**
  * A static interface for SessionInstance.
  */
-class Session
+final class Session
 {
     /**
      * @var string $name The name of the session.
@@ -30,8 +30,8 @@ class Session
      */
     public static function name(string $name)
     {
-        static::$name = $name;
-        static::$session = null;
+        self::$name = $name;
+        self::$session = null;
     }
 
 
@@ -44,7 +44,7 @@ class Session
      */
     public static function setInstance(SessionInterface $session): void
     {
-        static::$session = $session;
+        self::$session = $session;
     }
 
 
@@ -55,17 +55,17 @@ class Session
      */
     public static function getInstance(): SessionInterface
     {
-        if (static::$session instanceof SessionInterface) {
-            return static::$session;
+        if (self::$session instanceof SessionInterface) {
+            return self::$session;
         }
 
-        if (strlen(static::$name) < 1) {
+        if (strlen(self::$name) < 1) {
             throw new InvalidNameException("Cannot start session, no name has been specified, you must call Session::name() before using this class");
         }
 
-        static::$session = new SessionInstance(static::$name);
+        self::$session = new SessionInstance(self::$name);
 
-        return static::$session;
+        return self::$session;
     }
 
 
@@ -78,7 +78,7 @@ class Session
      */
     public static function createNamespace(string $name): SessionInterface
     {
-        return static::getInstance()->createNamespace($name);
+        return self::getInstance()->createNamespace($name);
     }
 
 
@@ -91,7 +91,7 @@ class Session
      */
     public static function get(string $key)
     {
-        return static::getInstance()->get($key);
+        return self::getInstance()->get($key);
     }
 
 
@@ -102,7 +102,7 @@ class Session
      */
     public static function getAll(): array
     {
-        return static::getInstance()->getAll();
+        return self::getInstance()->getAll();
     }
 
 
@@ -116,7 +116,7 @@ class Session
      */
     public static function set($data, $value = null)
     {
-        static::getInstance()->set($data, $value);
+        self::getInstance()->set($data, $value);
     }
 
 
@@ -137,7 +137,7 @@ class Session
      */
     public static function getSet(string $key, $default = null, bool $strict = false)
     {
-        return static::getInstance()->getSet($key, $default, $strict);
+        return self::getInstance()->getSet($key, $default, $strict);
     }
 
 
@@ -150,7 +150,7 @@ class Session
      */
     public static function delete(string ...$keys)
     {
-        static::getInstance()->delete(...$keys);
+        self::getInstance()->delete(...$keys);
     }
 
 
@@ -161,7 +161,7 @@ class Session
      */
     public static function clear()
     {
-        static::getInstance()->clear();
+        self::getInstance()->clear();
     }
 
 
@@ -174,7 +174,7 @@ class Session
      */
     public static function getFlash(string $key)
     {
-        return static::getInstance()->getFlash($key);
+        return self::getInstance()->getFlash($key);
     }
 
 
@@ -188,7 +188,7 @@ class Session
      */
     public static function setFlash(string $key, $value)
     {
-        static::getInstance()->setFlash($key, $value);
+        self::getInstance()->setFlash($key, $value);
     }
 
 
@@ -197,6 +197,6 @@ class Session
      */
     public static function destroy(): void
     {
-        static::getInstance()->destroy();
+        self::getInstance()->destroy();
     }
 }
