@@ -40,7 +40,7 @@ class SessionTest extends TestCase
 
     public function testSetInstance(): void
     {
-        $session = Mockery::mock(SessionInstance::class);
+        $session = Mockery::mock(SessionInterface::class);
         Session::setInstance($session);
         $this->assertSame($session, Session::getInstance());
     }
@@ -160,7 +160,7 @@ class SessionTest extends TestCase
 
     public function testDestroy(): void
     {
-        $session = Mockery::mock(SessionInstance::class);
+        $session = Mockery::mock(SessionInterface::class);
         Session::setInstance($session);
 
         $session->shouldReceive("destroy")->once()->with();

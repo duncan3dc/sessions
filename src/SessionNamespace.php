@@ -5,7 +5,7 @@ namespace duncan3dc\Sessions;
 /**
  * A namespaced portion of the session data.
  */
-class SessionNamespace implements SessionInterface
+final class SessionNamespace implements SessionInterface
 {
     use SessionTrait;
 

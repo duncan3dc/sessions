@@ -21,7 +21,7 @@ use function time;
 /**
  * A non-blocking session manager.
  */
-class SessionInstance implements SessionInterface
+final class SessionInstance implements SessionInterface
 {
     use SessionTrait;
 

@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sessions;
 
-class Cookie implements CookieInterface
+final class Cookie implements CookieInterface
 {
     /**
      * @var int $lifetime The lifetime of the session cookie in seconds.
@@ -39,7 +39,7 @@ class Cookie implements CookieInterface
     {
         $params = session_get_cookie_params();
 
-        return (new static())
+        return (new self())
             ->withLifetime($params["lifetime"])
             ->withPath($params["path"])
             ->withDomain($params["domain"])

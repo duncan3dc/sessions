@@ -9,7 +9,7 @@ use PSR7Sessions\Storageless\Session\SessionInterface as StoragelessInterface;
 
 use function is_array;
 
-class Session implements SessionInterface
+final class Session implements SessionInterface
 {
     use SessionTrait;
 
