@@ -26,29 +26,20 @@ final class SessionInstance implements SessionInterface
     use SessionTrait;
 
     /**
-     * @var bool $init Whether the session has been started or not.
+     * @var bool Whether the session has been started or not.
      */
-    private $init = false;
+    private bool $init = false;
+
+    private string $name = "";
 
     /**
-     * @var string $name The name of the session.
+     * @var array<string, mixed> The cache of the session data.
      */
-    private $name = "";
+    private array $data = [];
 
-    /**
-     * @var array<string, mixed> $data The cache of the session data.
-     */
-    private $data = [];
+    private string $id = "";
 
-    /**
-     * @var string The session ID
-     */
-    private $id = "";
-
-    /**
-     * @var CookieInterface $cookie The cookie settings to use.
-     */
-    private $cookie;
+    private CookieInterface $cookie;
 
 
     /**

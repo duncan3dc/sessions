@@ -9,15 +9,9 @@ final class SessionNamespace implements SessionInterface
 {
     use SessionTrait;
 
-    /**
-     * @var string $name The namespace of the session.
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var SessionInterface $session The underlying session instance.
-     */
-    private $session;
+    private SessionInterface $session;
 
 
     /**
