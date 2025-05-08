@@ -101,4 +101,10 @@ interface SessionInterface
      * @return SessionInterface
      */
     public function setFlash(string $key, $value): SessionInterface;
+
+
+    /**
+     * Tear down the session and wipe all its data.
+     */
+    public function destroy(): void;
 }
