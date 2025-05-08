@@ -39,7 +39,9 @@ final class Session implements SessionInterface
 
     public function getAll(): array
     {
-        return (array) $this->session->jsonSerialize();
+        /** @var array<string, mixed> $result */
+        $result = (array) $this->session->jsonSerialize();
+        return $result;
     }
 
 
@@ -47,9 +49,11 @@ final class Session implements SessionInterface
     {
         if (is_array($data)) {
             foreach ($data as $key => $val) {
+                /** @var array<mixed>|bool|float|int|object|string|null $val */
                 $this->session->set($key, $val);
             }
         } else {
+            /** @var array<mixed>|bool|float|int|object|string|null $value */
             $this->session->set($data, $value);
         }
 
