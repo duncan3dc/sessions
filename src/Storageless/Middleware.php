@@ -10,10 +10,7 @@ use PSR7Sessions\Storageless\Http\SessionMiddleware as StoragelessMiddleware;
 
 final class Middleware implements MiddlewareInterface
 {
-    /**
-     * @var StoragelessMiddleware $middleware The storageless middleware doing all the hard work.
-     */
-    private $middleware;
+    private StoragelessMiddleware $middleware;
 
 
     /**

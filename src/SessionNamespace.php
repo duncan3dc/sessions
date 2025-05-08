@@ -9,15 +9,9 @@ final class SessionNamespace implements SessionInterface
 {
     use SessionTrait;
 
-    /**
-     * @var string $name The namespace of the session.
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var SessionInterface $session The underlying session instance.
-     */
-    private $session;
+    private SessionInterface $session;
 
 
     /**
@@ -111,7 +105,7 @@ final class SessionNamespace implements SessionInterface
     /**
      * Set a value within session data.
      */
-    public function set($data, $value = null): SessionInterface
+    public function set(string|array $data, $value = null): SessionInterface
     {
         if (is_array($data)) {
             $newData = [];

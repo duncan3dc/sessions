@@ -26,14 +26,12 @@ class WebTest extends TestCase
 {
     private const SERVER_PORT = 15377;
 
-    /** @var int */
-    private static $pid;
+    private static int $pid;
 
     /** @var CookieJarInterface<SetCookie> */
-    private $cookies;
+    private CookieJarInterface $cookies;
 
-    /** @var ClientInterface */
-    private $client;
+    private ClientInterface $client;
 
 
     public static function setUpBeforeClass(): void

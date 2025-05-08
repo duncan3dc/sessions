@@ -11,11 +11,10 @@ use PSR7Sessions\Storageless\Session\SessionInterface;
 
 class SessionTest extends TestCase
 {
-    /** @var Session */
-    private $session;
+    private Session $session;
 
     /** @var SessionInterface&MockInterface */
-    private $storageless;
+    private SessionInterface $storageless;
 
 
     public function setUp(): void
