@@ -260,10 +260,8 @@ class SessionInstance implements SessionInterface
 
     /**
      * Tear down the session and wipe all its data.
-     *
-     * @return SessionInterface
      */
-    public function destroy(): SessionInterface
+    public function destroy(): void
     {
         try {
             $this->init();
@@ -282,7 +280,5 @@ class SessionInstance implements SessionInterface
         # Reset the session data
         $this->init = false;
         $this->data = [];
-
-        return $this;
     }
 }

@@ -145,4 +145,10 @@ class SessionNamespace implements SessionInterface
 
         return $this;
     }
+
+
+    public function destroy(): void
+    {
+        $this->clear();
+    }
 }

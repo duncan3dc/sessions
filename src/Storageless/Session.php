@@ -80,4 +80,10 @@ class Session implements SessionInterface
 
         return $this;
     }
+
+
+    public function destroy(): void
+    {
+        $this->session->clear();
+    }
 }
