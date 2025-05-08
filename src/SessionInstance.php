@@ -114,7 +114,7 @@ final class SessionInstance implements SessionInterface
             setcookie($this->name, (string) session_id(), $expires, $this->cookie->getPath(), $this->cookie->getDomain(), $this->cookie->isSecure(), $this->cookie->isHttpOnly());
         }
 
-        # Grab the sessions data to respond to get()
+        /** @var array<string, mixed> $_SESSION Grab the sessions data to respond to get() */
         $this->data = $_SESSION;
 
         # Grab session ID
@@ -250,6 +250,7 @@ final class SessionInstance implements SessionInterface
             $_SESSION[$data] = $value;
         }
 
+        /** @var array<string, mixed> $_SESSION Grab the sessions data to respond to get() */
         $this->data = $_SESSION;
 
         session_write_close();

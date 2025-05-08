@@ -7,6 +7,7 @@ use duncan3dc\Sessions\Session;
 use duncan3dc\Sessions\SessionInstance;
 use duncan3dc\Sessions\SessionInterface;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -15,6 +16,8 @@ use function substr;
 
 class SessionTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     /** @var SessionInterface&MockInterface */
     private $session;
 
@@ -56,7 +59,6 @@ class SessionTest extends TestCase
         $session = Session::getInstance();
 
         # Ensure we get a session instance
-        $this->assertInstanceOf(SessionInterface::class, $session);
         $this->assertInstanceOf(SessionInstance::class, $session);
 
         # Ensure we get the same instance on subsequent calls
@@ -81,24 +83,21 @@ class SessionTest extends TestCase
     public function testSetInt(): void
     {
         $this->session->shouldReceive("set")->once()->with("one", 1);
-        $result = Session::set("one", 1);
-        $this->assertNull($result);
+        Session::set("one", 1);
     }
 
 
     public function testSetString(): void
     {
         $this->session->shouldReceive("set")->once()->with("one", "1");
-        $result = Session::set("one", "1");
-        $this->assertNull($result);
+        Session::set("one", "1");
     }
 
 
     public function testSetFloat(): void
     {
         $this->session->shouldReceive("set")->once()->with("one", 1.0);
-        $result = Session::set("one", 1.0);
-        $this->assertNull($result);
+        Session::set("one", 1.0);
     }
 
 
@@ -137,24 +136,21 @@ class SessionTest extends TestCase
     public function testUnset(): void
     {
         $this->session->shouldReceive("delete")->once()->with("one");
-        $result = Session::delete("one");
-        $this->assertNull($result);
+        Session::delete("one");
     }
 
 
     public function testUnsetArray(): void
     {
         $this->session->shouldReceive("delete")->once()->with("one", "three");
-        $result = Session::delete("one", "three");
-        $this->assertNull($result);
+        Session::delete("one", "three");
     }
 
 
     public function testClear(): void
     {
         $this->session->shouldReceive("clear")->once()->with();
-        $result = Session::clear();
-        $this->assertNull($result);
+        Session::clear();
     }
 
 
@@ -164,8 +160,7 @@ class SessionTest extends TestCase
         Session::setInstance($session);
 
         $session->shouldReceive("destroy")->once()->with();
-        $result = Session::destroy();
-        $this->assertNull($result);
+        Session::destroy();
     }
 
 
@@ -201,8 +196,7 @@ class SessionTest extends TestCase
     public function testSetFlash(): void
     {
         $this->session->shouldReceive("setFlash")->once()->with("field", "boom!");
-        $result = Session::setFlash("field", "boom!");
-        $this->assertNull($result);
+        Session::setFlash("field", "boom!");
     }
 
 

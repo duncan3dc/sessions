@@ -71,6 +71,7 @@ class WebTest extends TestCase
         unset($this->client);
 
         $cookies = new Intruder($this->cookies);
+        self::assertIsString($cookies->filename);
         unlink($cookies->filename);
     }
 
