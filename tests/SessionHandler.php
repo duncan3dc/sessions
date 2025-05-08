@@ -4,47 +4,41 @@ namespace duncan3dc\SessionsTest;
 
 class SessionHandler implements \SessionHandlerInterface
 {
-    /** @var string */
-    private $data = "";
+    private string $data = "";
 
-    #[\ReturnTypeWillChange]
-    public function close()
+
+    public function close(): bool
     {
         return true;
     }
 
 
-    #[\ReturnTypeWillChange]
-    public function destroy($id)
+    public function destroy(string $id): bool
     {
         $this->data = "";
         return true;
     }
 
 
-    #[\ReturnTypeWillChange]
-    public function gc($max)
+    public function gc(int $max): int|false
+    {
+        return 0;
+    }
+
+
+    public function open(string $path, string $name): bool
     {
         return true;
     }
 
 
-    #[\ReturnTypeWillChange]
-    public function open($path, $name)
-    {
-        return true;
-    }
-
-
-    #[\ReturnTypeWillChange]
-    public function read($id)
+    public function read(string $id): string|false
     {
         return $this->data;
     }
 
 
-    #[\ReturnTypeWillChange]
-    public function write($id, $data)
+    public function write(string $id, string $data): bool
     {
         $this->data = $data;
         return true;
