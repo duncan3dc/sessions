@@ -48,9 +48,6 @@ final class Cookie implements CookieInterface
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function withLifetime(int $lifetime): CookieInterface
     {
         $cookie = clone $this;
@@ -59,18 +56,12 @@ final class Cookie implements CookieInterface
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function getLifetime(): int
     {
         return $this->lifetime;
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function withPath(string $path): CookieInterface
     {
         $cookie = clone $this;
@@ -79,18 +70,12 @@ final class Cookie implements CookieInterface
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function getPath(): string
     {
         return $this->path;
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function withDomain(string $domain): CookieInterface
     {
         $cookie = clone $this;
@@ -99,18 +84,12 @@ final class Cookie implements CookieInterface
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function getDomain(): string
     {
         return $this->domain;
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function withSecure(bool $secure): CookieInterface
     {
         $cookie = clone $this;
@@ -119,29 +98,20 @@ final class Cookie implements CookieInterface
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function isSecure(): bool
     {
         return $this->secure;
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function withHttpOnly(bool $httponly): CookieInterface
     {
         $cookie = clone $this;
-        $cookie->httponly = (bool) $httponly;
+        $cookie->httponly = $httponly;
         return $cookie;
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function isHttpOnly(): bool
     {
         return $this->httponly;

@@ -10,11 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 class SessionNamespaceTest extends TestCase
 {
-    /** @var SessionNamespace */
-    private $namespace;
+    private SessionNamespace $namespace;
 
     /** @var SessionInterface&MockInterface */
-    private $session;
+    private SessionInterface $session;
 
 
     public function setUp(): void

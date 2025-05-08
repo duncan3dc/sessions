@@ -46,10 +46,10 @@ final class SessionInstance implements SessionInterface
      * Create a new instance.
      *
      * @param string $name The name of the session
-     * @param CookieInterface $cookie The cookie settings to use
+     * @param CookieInterface|null $cookie The cookie settings to use
      * @param string $id The session ID to use
      */
-    public function __construct(string $name, CookieInterface $cookie = null, string $id = "")
+    public function __construct(string $name, ?CookieInterface $cookie = null, string $id = "")
     {
         if (strlen($name) < 1) {
             throw new InvalidNameException("Cannot start session, no name has been specified");
@@ -67,11 +67,9 @@ final class SessionInstance implements SessionInterface
 
     /**
      * Ensure the session data is loaded into cache.
-     *
-     * @return void
      * @throws AlreadyActiveException
      */
-    private function init()
+    private function init(): void
     {
         if ($this->init) {
             return;
@@ -133,7 +131,7 @@ final class SessionInstance implements SessionInterface
      * @return string The new session ID
      * @throws AlreadyActiveException
      */
-    public function regenerate()
+    public function regenerate(): string
     {
         $this->init();
 
@@ -177,7 +175,7 @@ final class SessionInstance implements SessionInterface
         $this->init();
 
         if (!array_key_exists($key, $this->data)) {
-            return;
+            return null;
         }
 
         return $this->data[$key];
@@ -202,7 +200,7 @@ final class SessionInstance implements SessionInterface
      *
      * @throws AlreadyActiveException
      */
-    public function set($data, $value = null): SessionInterface
+    public function set(string|array $data, $value = null): SessionInterface
     {
         $this->init();
 

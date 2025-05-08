@@ -105,7 +105,7 @@ final class SessionNamespace implements SessionInterface
     /**
      * Set a value within session data.
      */
-    public function set($data, $value = null): SessionInterface
+    public function set(string|array $data, $value = null): SessionInterface
     {
         if (is_array($data)) {
             $newData = [];

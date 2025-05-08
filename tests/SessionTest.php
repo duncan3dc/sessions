@@ -19,7 +19,7 @@ class SessionTest extends TestCase
     use MockeryPHPUnitIntegration;
 
     /** @var SessionInterface&MockInterface */
-    private $session;
+    private SessionInterface $session;
 
 
     public function setUp(): void

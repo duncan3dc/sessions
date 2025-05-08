@@ -25,10 +25,8 @@ final class Session
      * Set the name of the session to use.
      *
      * @param string $name The name of the session
-     *
-     * @return void
      */
-    public static function name(string $name)
+    public static function name(string $name): void
     {
         self::$name = $name;
         self::$session = null;
@@ -114,7 +112,7 @@ final class Session
      *
      * @return void
      */
-    public static function set($data, $value = null)
+    public static function set(string|array $data, $value = null): void
     {
         self::getInstance()->set($data, $value);
     }
@@ -145,10 +143,8 @@ final class Session
      * Unset a value within session data.
      *
      * @param string ...$keys The keys to delete from the session
-     *
-     * @return void
      */
-    public static function delete(string ...$keys)
+    public static function delete(string ...$keys): void
     {
         self::getInstance()->delete(...$keys);
     }
@@ -156,10 +152,8 @@ final class Session
 
     /**
      * Clear all previously set values.
-     *
-     * @return void
      */
-    public static function clear()
+    public static function clear(): void
     {
         self::getInstance()->clear();
     }
@@ -186,7 +180,7 @@ final class Session
      *
      * @return void
      */
-    public static function setFlash(string $key, $value)
+    public static function setFlash(string $key, $value): void
     {
         self::getInstance()->setFlash($key, $value);
     }

@@ -11,8 +11,7 @@ use function session_set_save_handler;
 
 class SessionInstanceTest extends TestCase
 {
-    /** @var SessionInstance */
-    private $session;
+    private SessionInstance $session;
 
 
     public function setUp(): void
