@@ -39,7 +39,7 @@ interface SessionInterface
      * Set a value within session data.
      *
      * @param string|array<string, mixed> $data Either the name of the session key to update, or an array of keys to update
-     * @param mixed $value If $data is a string then store this value in the session data
+     * @param array|bool|float|int|object|string|null $value If $data is a string then store this value in the session data
      *
      * @return SessionInterface
      */

@@ -37,6 +37,9 @@ class RequestHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $storageless = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
+        if (!$storageless instanceof \PSR7Sessions\Storageless\Session\SessionInterface) {
+            throw new \InvalidArgumentException("Request must have the session attribute set to an instance of " . \PSR7Sessions\Storageless\Session\SessionInterface::class);
+        }
 
         $session = new Session($storageless);
 
