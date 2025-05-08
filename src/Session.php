@@ -195,14 +195,9 @@ class Session
 
     /**
      * Tear down the session and wipe all it's data.
-     *
-     * @return void
      */
-    public static function destroy()
+    public static function destroy(): void
     {
-        $session = static::getInstance();
-        if (method_exists($session, "destroy")) {
-            $session->destroy();
-        }
+        static::getInstance()->destroy();
     }
 }
