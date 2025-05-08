@@ -10,10 +10,7 @@ use PSR7Sessions\Storageless\Http\SessionMiddleware;
 
 final class RequestHandler implements RequestHandlerInterface
 {
-    /**
-     * @var RequestHandlerInterface $handler The handler to delegate to.
-     */
-    private $handler;
+    private RequestHandlerInterface $handler;
 
 
     /**

@@ -13,10 +13,7 @@ final class Session implements SessionInterface
 {
     use SessionTrait;
 
-    /**
-     * @var StoragelessInterface $session The instance we are wrapping.
-     */
-    private $session;
+    private StoragelessInterface $session;
 
 
     public function __construct(StoragelessInterface $session)
@@ -45,7 +42,7 @@ final class Session implements SessionInterface
     }
 
 
-    public function set($data, $value = null): SessionInterface
+    public function set(string|array $data, $value = null): SessionInterface
     {
         if (is_array($data)) {
             foreach ($data as $key => $val) {

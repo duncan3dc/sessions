@@ -43,7 +43,7 @@ interface SessionInterface
      *
      * @return SessionInterface
      */
-    public function set($data, $value = null): SessionInterface;
+    public function set(string|array $data, $value = null): SessionInterface;
 
 
     /**
