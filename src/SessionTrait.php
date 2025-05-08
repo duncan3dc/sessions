@@ -19,10 +19,10 @@ trait SessionTrait
      * All checks are truthy/falsy (so a POST value of "0" is ignored), unless the 3rd parameter is set to true.
      *
      * @param string $key The name of the key to retrieve from session data
-     * @param mixed $default The value to use if the current session value is falsey
+     * @param array|bool|float|int|object|string|null $default The value to use if the current session value is falsey
      * @param bool $strict Whether to do strict comparisons or not
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getSet(string $key, $default = null, bool $strict = false)
     {
@@ -118,7 +118,7 @@ trait SessionTrait
      *
      * @param string $key The name of the flash value to retrieve
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getFlash(string $key)
     {
@@ -136,7 +136,7 @@ trait SessionTrait
      * Set a one-time value within session data.
      *
      * @param string $key The name of the flash value to update
-     * @param mixed $value The value to store against the key
+     * @param array|bool|float|int|object|string|null $value The value to store against the key
      *
      * @return SessionInterface
      */

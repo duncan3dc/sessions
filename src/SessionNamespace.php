@@ -76,7 +76,7 @@ class SessionNamespace implements SessionInterface
      *
      * @param string $key The name of the name to retrieve
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function get(string $key)
     {

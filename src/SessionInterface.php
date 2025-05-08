@@ -22,7 +22,7 @@ interface SessionInterface
      *
      * @param string $key The name of the name to retrieve
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function get(string $key);
 
@@ -30,7 +30,7 @@ interface SessionInterface
     /**
      * Get all the current session data.
      *
-     * @return array<string, mixed>
+     * @return array<string, array|bool|float|int|object|string|null>
      */
     public function getAll(): array;
 
@@ -38,7 +38,7 @@ interface SessionInterface
     /**
      * Set a value within session data.
      *
-     * @param string|array<string, mixed> $data Either the name of the session key to update, or an array of keys to update
+     * @param string|array<string, array|bool|float|int|object|string|null> $data Either the name of the session key to update, or an array of keys to update
      * @param array|bool|float|int|object|string|null $value If $data is a string then store this value in the session data
      *
      * @return SessionInterface
@@ -56,10 +56,10 @@ interface SessionInterface
      * All checks are truthy/falsy (so a POST value of "0" is ignored), unless the 3rd parameter is set to true.
      *
      * @param string $key The name of the key to retrieve from session data
-     * @param mixed $default The value to use if the current session value is falsy
+     * @param array|bool|float|int|object|string|null $default The value to use if the current session value is falsy
      * @param bool $strict Whether to do strict comparisons or not
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getSet(string $key, $default = null, bool $strict = false);
 
@@ -87,7 +87,7 @@ interface SessionInterface
      *
      * @param string $key The name of the flash value to retrieve
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getFlash(string $key);
 
@@ -96,7 +96,7 @@ interface SessionInterface
      * Set a one-time value within session data.
      *
      * @param string $key The name of the flash value to update
-     * @param mixed $value The value to store against the key
+     * @param array|bool|float|int|object|string|null $value The value to store against the key
      *
      * @return SessionInterface
      */

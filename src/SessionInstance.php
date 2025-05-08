@@ -36,7 +36,7 @@ class SessionInstance implements SessionInterface
     private $name = "";
 
     /**
-     * @var array<string, mixed> $data The cache of the session data.
+     * @var array<string, bool|float|int|object|string|null> $data The cache of the session data.
      */
     private $data = [];
 
@@ -178,7 +178,7 @@ class SessionInstance implements SessionInterface
      *
      * @param string $key The name of the name to retrieve
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      * @throws AlreadyActiveException
      */
     public function get(string $key)
