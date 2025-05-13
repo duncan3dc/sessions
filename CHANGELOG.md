@@ -4,6 +4,18 @@
 
 --------
 
+## 3.0.0 - 2025-05-13
+
+### Changed
+
+* All classes are now final to avoid inheritance issues.
+* Property and return types have been added everywhere possible.
+* [SessionInterface] Added the destroy() method.
+* [Support] Added support for PHP 8.3 and 8.4.
+* [Support] Dropped support for PHP 7.4 and 8.0.
+
+--------
+
 ## 2.2.0 - 2024-02-29
 
 ### Changed
