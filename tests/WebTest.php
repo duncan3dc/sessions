@@ -101,7 +101,7 @@ class WebTest extends TestCase
      *
      * @return ResponseInterface
      */
-    private function request(string $path, string $name = null): ResponseInterface
+    private function request(string $path, ?string $name = null): ResponseInterface
     {
         if ($name !== null) {
             if (strpos($path, "?")) {
@@ -243,8 +243,8 @@ class WebTest extends TestCase
     }
     public function testCookieDomain(): void
     {
-        $this->request("cookies.php?domain=example.com");
-        $this->assertEquals("example.com", $this->getCookie()->getDomain());
+        $this->request("cookies.php?domain=localhost");
+        $this->assertEquals("localhost", $this->getCookie()->getDomain());
     }
     public function testCookieSecure(): void
     {

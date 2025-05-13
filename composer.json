@@ -22,16 +22,17 @@
     },
     "require-dev": {
         "duncan3dc/object-intruder": "^0.3 || ^1.0",
-        "guzzlehttp/guzzle": "7.2.*",
+        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/promises": "^2.2",
         "laminas/laminas-stratigility": "^3.0",
         "lcobucci/jwt": "^4.0 || ^5.0",
         "maglnet/composer-require-checker": "^3.0",
-        "mockery/mockery": "^1.5",
+        "mockery/mockery": "^1.6.12",
         "phpstan/phpstan": "^2.1.9",
         "phpstan/phpstan-mockery": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "squizlabs/php_codesniffer": "^3.7",
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^9.6.23"
     },
     "autoload": {
         "psr-4": {"duncan3dc\\Sessions\\": "src/"}
