@@ -20,18 +20,25 @@ use PSR7Sessions\Storageless\Http\Configuration;
 use PSR7Sessions\Storageless\Http\SessionMiddleware;
 
 use function Laminas\Stratigility\middleware;
+use function method_exists;
 
 class MiddlewareTest extends TestCase
 {
     private function getSession(): Middleware
     {
+        $jwt = JwtConfig::forSymmetricSigner(
+            new Sha256(),
+            InMemory::plainText("mBC5v1sOKVvbdEitdSBenu59nfNfhwkedkJVNabosTw="),
+        );
+        if (method_exists(Configuration::class, "fromJwtConfiguration")) {
+            /** @var Configuration $config */
+            $config = Configuration::fromJwtConfiguration($jwt);
+        } else {
+            $config = new Configuration($jwt);
+        }
+
         $middleware = new SessionMiddleware(
-            (new Configuration(
-                JwtConfig::forSymmetricSigner(
-                    new Sha256(),
-                    InMemory::plainText("mBC5v1sOKVvbdEitdSBenu59nfNfhwkedkJVNabosTw="),
-                ),
-            ))->withCookie(
+            $config->withCookie(
                 SetCookie::create('an-example-cookie-name')
                     ->withSecure(false)
                     ->withHttpOnly(true)

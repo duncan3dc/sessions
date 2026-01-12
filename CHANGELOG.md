@@ -4,6 +4,14 @@
 
 --------
 
+## 3.1.0 - 2026-01-12
+
+### Changed
+
+* [Support] Added support for PHP 8.5.
+
+--------
+
 ## 3.0.0 - 2025-05-13
 
 ### Changed

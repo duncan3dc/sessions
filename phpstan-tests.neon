@@ -1,6 +1,7 @@
 parameters:
 	ignoreErrors:
 		- '/Access to an undefined property duncan3dc\\ObjectIntruder\\Intruder::/'
+		- '/PSR7Sessions/'
 	excludePaths:
 		- %rootDir%/../../../tests/web*
 
