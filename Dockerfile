@@ -7,4 +7,6 @@ RUN if [ "$COVERAGE" = "pcov" ]; then pecl install pcov && docker-php-ext-enable
 RUN apt update && apt install -y git zip
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+RUN echo "memory_limit = -1" > /usr/local/etc/php/conf.d/sessions.ini
+
 WORKDIR /app
