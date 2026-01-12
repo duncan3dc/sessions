@@ -10,3 +10,4 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN echo "memory_limit = -1" > /usr/local/etc/php/conf.d/sessions.ini
 
 WORKDIR /app
+RUN git config --global --add safe.directory /app
